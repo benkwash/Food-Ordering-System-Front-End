@@ -1,0 +1,59 @@
+.dialog-container{
+    position: relative;
+    margin: auto;
+    height: 300px;
+}
+
+.mat-form-field{
+    width: 100%;
+    /* height: 200px; */
+}
+/* mat-dialog-title{
+    margin-bottom: 20px;
+} */
+
+.action-buttons{
+    /* margin-top: 30px; */
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    /* width: 9rem; */
+  }
+.rating span {
+    flex: 1;
+    align-self: flex-end;
+    /* background-color: black; */
+    /* border: 0.1rem solid white; */
+}
+
+.rating span:hover {
+    color: #2d42cc;
+}
+
+.rating span:hover ~ span {
+    color: #2d42cc;
+}
+
+.rating span.star-highlight{
+    color:#2d42cc;
+}
+
+.review{
+    margin-top: 20px;
+}
+/* .material-icons.star{
+    color: #808080;
+}
+
+.material-icons.star-one:hover{
+    color: #d8e08b;
+}
+
+.material-icons.star-two:hover ~.material-icons.star-one{
+    color: #d8e08b;
+} */

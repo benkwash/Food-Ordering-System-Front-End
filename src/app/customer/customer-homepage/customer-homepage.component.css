@@ -1,0 +1,132 @@
+.main-home-page {
+    /* padding-top: 50px; */
+    position: relative;
+    margin: auto;
+    width: 100vw;
+    /* height: 100%; */
+    height: calc(100vh - 50px);
+    background-color: #ffb8ac;
+    background-image: url("../../../assets/images/food-background-final.png"), url("../../../assets/images/food-background-final2.png");
+    background-position: -20px 102%, 140% -40px;
+    background-repeat: no-repeat;
+    background-size: 300px 300px;
+}
+
+.main-page-contents {
+    max-width: 90vw;
+}
+
+
+/* 
+.homepage-descrption {
+    position: absolute;
+} */
+
+.homepage-descrption>h1 {
+    font-family: 'Verdana, Geneva, sans-serif !important';
+    color: #001550fb;
+    text-align: center;
+    /* color: #00315c; */
+    font-size: 30px;
+    /* font-family: "Comic Sans MS", cursive, sans-serif; */
+}
+
+.homepage-descrption>h3 {
+    color: #002c63;
+    font-family: 'Aldrich' !important;
+    font-size: 20px !important;
+    text-align: center;
+}
+
+.search-bar {
+    position: absolute;
+    /* margin: 10px; */
+    margin: auto;
+    width: 860px;
+    max-width: 95%;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.info-tab {
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding-bottom: 0px;
+}
+
+.search-input,
+mat-form-field {
+    /* margin: 5px 10px 5px 10px; */
+    /* margin-top: -4px; */
+    margin-bottom: -15px;
+    /* margin: 0px; */
+    border-bottom: -15px;
+    padding-bottom: -15px;
+}
+
+mat-form-field {
+    width: 100%;
+    margin: auto;
+    /* padding-bottom: 2px; */
+    /* background-color: #ffffff; */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    /* background-color: #ffffff; */
+}
+
+.info-right {
+    /* margin-bottom: -23px; */
+    /* margin-top: -10px; */
+}
+
+.info-left {
+    /* margin-bottom: -10px; */
+}
+
+
+/* .mat-form-field-outline-start,
+.mat-form-field-outline-end {
+    border-radius: 0 !important;
+    border-right-style: none;
+} */
+
+@media (min-width: 600px) {
+    .main-home-page {
+        background-image: url("../../../assets/images/food-background-final.png"), url("../../../assets/images/food-background-final2.png"), url('../../../assets/images/food-background-final3.png');
+        background-position: -20px 102%, 110% -40px, 110% 110%;
+        background-repeat: no-repeat;
+        background-size: 300px 300px;
+    }
+    .homepage-descrption>h1 {
+        font-size: 50px !important;
+    }
+    .homepage-descrption>h3 {
+        font-size: 30px !important;
+    }
+    .info-tab {
+        margin-bottom: -25px;
+        display: flex;
+        /* margin-top: 20px; */
+    }
+    .info-left {
+        flex: 0 0 50%;
+    }
+    .info-right {
+        flex: 1;
+    }
+    .search-input {
+        width: 50%;
+    }
+    mat-form-field {
+        /* max-width: 50vw; */
+        width: 100%;
+    }
+}
+
+
+/* .search-field>.left-input mat-form-field {
+    width: 380px
+} */

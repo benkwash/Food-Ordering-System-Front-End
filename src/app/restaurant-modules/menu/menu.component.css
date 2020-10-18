@@ -1,0 +1,109 @@
+.every-page {
+    position: relative;
+    width: 90%;
+    margin: auto;
+}
+
+.menu {
+    width: 100%;
+}
+
+.menu:hover {
+    font-weight: bold;
+    background-color: #e8e8e8;
+}
+
+mat-icon {
+    font: 50px;
+}
+
+.menu-list-top {
+    display: flex;
+    margin-top: 15px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.menu-list-top>button {
+    margin-right: 1px;
+}
+
+.material-icons {
+    cursor: pointer;
+}
+
+.menu {
+    cursor: pointer;
+}
+
+.material-icons.md-red {
+    color: #BF3F3F;
+}
+
+.material-icons {
+    padding: 0 14px;
+}
+
+
+/* .material-icons.md-light {
+    color: #5D5959
+} */
+
+.menu-picture {
+    /* border-radius: 50%; */
+    background-color: #dedede;
+    position: relative;
+    width: 450px;
+    height: 300px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.menu-picture img {
+    width: 450px;
+    height: 300px;
+    object-fit: cover;
+    /* border-radius: 50%; */
+}
+
+.mi-picture {
+    color: #5c5c5c;
+    width: 100%;
+    font-size: 150px;
+    padding: 70px 0;
+    text-align: center;
+}
+
+mat-progress-bar {
+    position: absolute;
+    bottom: 0;
+}
+
+.no-menu {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    /* height: 200px; */
+    /* border-radius: 50%; */
+}
+
+.no-menu>img {
+    /* margin-top: 2; */
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    /* border-radius: 50%; */
+}
+
+
+/* //mobile devices */
+
+@media (max-width: 600px) {
+    .menu-picture,
+    .menu-picture img {
+        width: 100%;
+        height: 250px;
+    }
+}

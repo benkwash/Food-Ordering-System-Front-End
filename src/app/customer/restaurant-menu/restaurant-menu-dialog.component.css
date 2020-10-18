@@ -1,0 +1,32 @@
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.material-icons {
+    display: inline-flex;
+    vertical-align: text-bottom;
+    font-size: 16px;
+}
+
+.radio-button {
+    margin: 5px;
+}
+
+.info-tab {
+    display: flex;
+    margin-top: 5px;
+}
+
+.info-left {
+    flex: 0 0 30%;
+}
+
+.info-right {
+    flex: 1;
+}
+
+mat-divider {
+    margin: 10px;
+}

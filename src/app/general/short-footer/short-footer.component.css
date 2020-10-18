@@ -1,0 +1,22 @@
+footer {
+    background: #f3f3f3;
+    color: black;
+	 padding: 15px 0px;
+    font-size: 15px;
+}
+
+#copyRight {
+    text-align: center;
+    font-size: 16px;
+}
+
+@media print {
+	footer {
+		padding: 15px 0px;
+		font-size: 14px;
+	}
+
+	#footer {
+		/*display: none;*/
+	}
+}

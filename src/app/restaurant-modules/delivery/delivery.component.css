@@ -1,0 +1,110 @@
+.main-card {
+    position: relative;
+    max-width: 900px;
+    margin: auto;
+}
+
+.title-head {
+    display: flex;
+    margin: auto;
+    margin-top: 15px;
+}
+
+
+/* .title-head>h2{
+    margin: auto;
+    width: 200px;
+} */
+
+.all-deliveries {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.delivery-card {
+    /* height: 80px; */
+    width: 290px;
+    /* margin:auto; */
+    margin-bottom: 30px;
+    /* zoom: 80%; */
+    /* margin-right: auto; */
+    margin-left: 10px;
+}
+
+
+/* mat-card-header{
+    margin-left: 0px;
+} */
+
+.info-tab {
+    display: flex;
+    margin-bottom: -10px;
+    /* margin-bottom: -15px; */
+    /* margin-top: 01px; */
+}
+
+.info-left {
+    flex: 0 0 40%;
+    margin-bottom: -5px;
+}
+
+.info-right {
+    flex: 1;
+    margin-bottom: -5px;
+}
+
+.right-btn {
+    margin-top: 5px;
+    ;
+}
+
+
+/* mat-card-content{
+    margin-bottom: -15px;
+} */
+
+
+/* mat-card-footer{ */
+
+
+/* margin-right: 10px; */
+
+
+/* } */
+
+.material-icons.md-red {
+    color: #BF3F3F;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.material-icons {
+    padding: 0 14px;
+}
+
+.material-icons.md-light {
+    color: #5c5c5c
+}
+
+.material-icons.md-blue {
+    color: #2d42cc
+}
+
+.material-icons.md-turk {
+    color: #5feddd
+}
+
+.material-icons.md-green {
+    color: #4ff06a
+}
+
+@media (max-width: 500px) {
+    .delivery-card {
+        width: 90%;
+        margin: auto;
+        margin-top: 10px;
+    }
+}

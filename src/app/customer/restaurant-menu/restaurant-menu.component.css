@@ -1,0 +1,126 @@
+.body-main {
+    margin: auto;
+    max-width: 100%;
+    height: calc(100vh - 50px);
+    position: relative;
+}
+
+.restaurant-info h3,
+.restaurant-info h4 {
+    margin-left: 20px;
+}
+
+.main-content {
+    width: 100%;
+    height: 100%;
+}
+
+.all-menu {
+    /* position: relative; */
+    padding: 20px;
+    width: 65%;
+    /* min-height: 800px; */
+}
+
+.restaurant-info {
+    width: 100%;
+}
+
+.restaurant-info>img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.checkout-orders {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.each-menu {
+    margin-bottom: 10px;
+}
+
+.menu-content {
+    padding-left: 20px;
+}
+
+.side-pane {
+    position: absolute;
+    /* top: 0px; */
+    bottom: 0px;
+    right: 20px;
+    /* height: 100vh; */
+    height: calc(100vh - 70px);
+    width: 33%;
+}
+
+.fixed-options {
+    position: absolute;
+    bottom: 5px;
+}
+
+.fab-cart {
+    display: none;
+}
+
+.material-icons {
+    display: inline-flex;
+    vertical-align: text-bottom;
+    font-size: 16px;
+}
+
+.form-width {
+    width: 45%;
+    margin: auto;
+}
+
+.f-right {
+    margin-left: 5px;
+}
+
+.menu-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.menu-image mat-icon {
+    font-size: 60px;
+    margin: auto;
+    text-align: center;
+}
+
+.info-tab {
+    display: flex;
+    margin-top: 5px;
+}
+
+.info-left {
+    flex: 0 0 110px;
+}
+
+.info-right {
+    flex: 1;
+}
+
+@media(max-width:850px) {
+    .side-pane {
+        display: none;
+    }
+    .all-menu {
+        width: 100%;
+    }
+    .fab-cart {
+        display: block;
+        position: fixed;
+        right: 15px;
+        bottom: 15px;
+    }
+    .show-side-pane {
+        display: block;
+        width: 100%;
+        right: 0;
+    }
+}

@@ -1,0 +1,71 @@
+.info-tab {
+    display: flex;
+    margin-top: 01px;
+}
+
+.info-left {
+    flex: 0 0 50%;
+}
+
+.info-right {
+    flex: 1;
+}
+
+.orders {
+    background-color: #e8e8e8;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.order-qty,
+.order-price {
+    color: #BF3F3F;
+}
+
+.head-top {
+    display: flex;
+    margin: auto;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.menu-list-top>button {
+    margin-right: 1px;
+}
+
+.material-icons {
+    cursor: pointer;
+}
+
+.menu {
+    cursor: pointer;
+}
+
+.material-icons.md-red {
+    color: #BF3F3F;
+}
+
+.material-icons {
+    padding: 0 14px;
+}
+
+.material-icons.md-light {
+    color: #5D5959
+}
+
+.material-icons.md-blue {
+    color: #2d42cc
+}
+
+.material-icons.md-turk {
+    color: #5feddd
+}
+
+.material-icons.md-green {
+    color: #4ff06a
+}
+
+.form-width {
+    width: 80%;
+}

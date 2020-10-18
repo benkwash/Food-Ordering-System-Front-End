@@ -1,0 +1,44 @@
+<div *ngIf="dialogType=='confirmDelivery'" class="dialog-container">
+    <h1 mat-dialog-title>Confirm delivery</h1>
+    <div mat-dialog-content>
+        <div class="info-tab">
+            <div class="info-left">
+                <p>Order ID</p>
+            </div>
+            <div class="info-right">
+                <p>{{cartID}}</p>
+            </div>
+        </div>
+        <div class="info-tab">
+            <div class="info-left">
+                <p>Customer Name</p>
+            </div>
+            <div class="info-right">
+                <p>{{customerName}}</p>
+            </div>
+        </div>
+        <div class="info-tab">
+            <div class="info-left">
+                <p>Customer Address</p>
+            </div>
+            <div class="info-right">
+                <p>{{customerAddress}}</p>
+            </div>
+        </div>
+        <div class="info-tab">
+            <div class="info-left">
+                <p>Customer Contact</p>
+            </div>
+            <div class="info-right">
+                <a href="tel:{{customerContact}}">{{customerContact}}</a>
+                <!-- <p>{{customerContact}}</p> -->
+            </div>
+        </div>
+            
+    </div>
+
+    <div mat-dialog-actions class="action-buttons">
+        <button mat-raised-button color="warn" (click)="onNoClick()">close</button>
+        <button mat-raised-button color="primary" (click)="confirmDelivery()" >confirm delivery</button>
+    </div>
+</div>

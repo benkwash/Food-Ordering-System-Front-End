@@ -1,0 +1,83 @@
+<div class="bg-white main-page pd-10">
+
+    <mat-card class="search-field">
+        <form (ngSubmit)="onSearch('delivery')" #form="ngForm">
+            <mat-form-field appearance="outline" class="search-input">
+                <mat-label>select your region</mat-label>
+                <mat-select required name="sregion" [(ngModel)]="formState.region">
+                    <mat-option *ngFor="let region of regions" [value]="region">
+                        {{region}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="search-input">
+                <mat-label>make we know your city</mat-label>
+                <input matInput required [(ngModel)]="formState.city" name="city" #city="ngModel">
+                <mat-icon matSuffix class="curser-pointer" color="primary" (click)="onSearch('delivery')">search
+                </mat-icon>
+            </mat-form-field>
+        </form>
+        <diV>
+            <mat-chip-list>
+                <mat-chip color="primary" [selected]="formState.option==='delivery'" class="cursor-pointer" (click)="onSearch('delivery')">delivery
+                    <span class="material-icons">
+                        local_shipping
+                    </span>
+                </mat-chip>
+                <mat-chip color="primary" [selected]="formState.option=='pickup'" (click)="onSearch('pickup')">Pickup
+                    <span class="material-icons">
+                        directions_walk
+                    </span>
+                </mat-chip>
+                <mat-chip color="primary" [selected]="formState.option=='table'" (click)="onSearch('table')">Reservation
+                    <span class="material-icons">
+                        deck
+                    </span>
+                </mat-chip>
+            </mat-chip-list>
+        </diV>
+
+    </mat-card>
+    <div *ngIf="allRestaurants.length!=0">
+        <div class="all-restaurants">
+            <div class="restaurant-card cursor-pointer" *ngFor="let restaurant of allRestaurants,let i=index" (click)="selectedRestaurant(i)">
+
+                <img *ngIf="restaurant.picture" class="res-thumbnail" src="{{logoAssestDir}}/{{restaurant.picture}}" alt="">
+                <img *ngIf="!restaurant.picture" class="res-thumbnail" src="../../../assets/images/food-img.jpg">
+                <h2>{{restaurant.restaurantName}}
+
+                    <span> ( {{restaurant.currentCity}} )</span>
+                </h2>
+                <div class="rating-info">
+                    <span class="material-icons">
+                        star_border
+                    </span>
+                    <span *ngIf="restaurant.review">
+                        {{restaurant.review.rating | number:'1.0-1'}}
+                    </span>
+                    <span *ngIf="!restaurant.review">
+                        {{ 0.0 | number:'1.0-1'}}
+                    </span>
+                    <!-- <span *ngIf="!restaurant.review">
+                        not rated
+                    </span> -->
+                    <span *ngIf="formState.option=='delivery'">Delivery: from {{restaurant.dCost | currency:'GHS'}}</span>
+                    <span *ngIf="formState.option=='table'">Reservation: from {{restaurant.tCost | currency:'GHS'}}</span>
+
+                    <!-- <span *ngIf="restaurant.currentCity==restaurant.dCity">(in {{restaurant.currentCity}} )</span> -->
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+    <div class="no-restaurants" *ngIf="allRestaurants.length==0">
+        <img src="../../../assets/images/no-restaurant2.jpg" alt="">
+        <h3>Sorry there are no restaurants in your location</h3>
+    </div>
+</div>

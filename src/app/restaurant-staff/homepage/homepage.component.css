@@ -1,0 +1,38 @@
+.main-page {
+    margin: auto;
+    margin: 10px;
+    /* max-width: 700px; */
+}
+
+mat-card {
+    margin-bottom: 10px;
+}
+
+.profile-card,
+.quick-links {
+    position: relative;
+    text-align: center;
+    padding: 0 5px 10px 5px;
+    width: 100%;
+    /* height: 200px; */
+}
+
+.profile-card img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-card .res-picture {
+    color: #5c5c5c;
+    width: 100%;
+    font-size: 150px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+mat-icon {
+    vertical-align: middle;
+    margin: 0 20px 0 20px;
+}

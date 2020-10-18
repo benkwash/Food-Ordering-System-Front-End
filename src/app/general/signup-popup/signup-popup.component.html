@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="dialog-title">
+    <span class="example-spacer"></span>
+    <span class="material-icons cursor-pointer right-tools" matTooltip="close" (click)="onNoClick()">
+        close
+        </span>
+</h1>
+<div mat-dialog-content>
+    <div class="customer-link cursor-pointer" (click)="onLinkClick('signupcustomer')">
+        <span class="material-icons">
+            person
+        </span>
+        <h3>Customer</h3>
+    </div>
+    <div class="vendor-link cursor-pointer" (click)="onLinkClick('signUp')">
+        <span class="material-icons">
+            store
+        </span>
+        <h3>Join our vendors</h3>
+    </div>
+    <!-- <button mat-button [routerLink]="['/signupcustomer']">signup</button> -->
+    <!-- <button mat-button-raised [routerLink]="['/signUp']">Join our vendors</button> -->
+</div>
+<div mat-dialog-actions>
+
+</div>

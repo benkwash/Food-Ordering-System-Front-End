@@ -1,0 +1,6 @@
+<alert type="danger" [dismissible]="true" (onClosed)="onClosed()">
+	<strong> {{errorMsg}} </strong>
+  <a  class="alert-link" (click)="tryOperationsAgain()" *ngIf="tryAgain">
+	  Please try again
+  </a>
+</alert>

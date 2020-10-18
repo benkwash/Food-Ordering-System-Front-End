@@ -1,0 +1,32 @@
+footer {
+    text-align: left;background: #328999;color: #fff;padding: 6px;font-size: 15px;
+}
+
+footer .fa {
+    background: #257887;
+    padding: 15px 0px;
+    font-size: 19px;
+    min-width: 35px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+footer .sp {
+    margin-bottom:10px;
+    margin-left: 3px;
+    margin-right: 5px;
+}
+
+footer strong { font-size: 16px; }
+
+#copyRight {
+    text-align: center;
+    font-size: 17px;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .spaceDown {
+        margin-bottom: 35px;
+    }
+}

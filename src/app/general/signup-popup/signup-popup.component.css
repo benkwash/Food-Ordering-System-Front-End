@@ -1,0 +1,20 @@
+.customer-link,
+.vendor-link,
+.dialog-title {
+    width: 100%;
+    display: flex;
+}
+
+.customer-link .material-icons,
+.vendor-link .material-icons {
+    margin-right: 20px;
+}
+
+.customer-link :hover,
+.vendor-link :hover {
+    color: #1b43c7;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}

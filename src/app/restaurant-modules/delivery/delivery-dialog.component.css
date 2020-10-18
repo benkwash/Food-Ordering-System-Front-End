@@ -1,0 +1,28 @@
+.dialog-container{
+    position: relative;
+    margin: auto;
+    height: 100%;
+}
+.action-buttons{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+  
+a{
+  color: #2d42cc
+}
+
+.info-tab {
+    display: flex;
+    margin-top: 01px;
+}
+
+.info-left {
+    flex: 0 0 40%;
+}
+
+.info-right {
+    flex: 1;
+}

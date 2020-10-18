@@ -1,0 +1,11 @@
+array.indexOf,
+array.fill,
+array.slice,
+array.splice,
+array.concat,
+array.reduce,
+array.sort
+Array.isArray
+arrow functions(es5)
+Array.map
+

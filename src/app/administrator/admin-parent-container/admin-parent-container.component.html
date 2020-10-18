@@ -1,0 +1,14 @@
+<div id="main-page-section" [class.screen-is-mobile]="mobileQuery.matches">
+    <app-admin-navbar (toggleSideBar)=sideBarToggle($event) class="top-toolbar"></app-admin-navbar>
+    <div>
+        <mat-sidenav-container class="drawer-container" id="mainPage">
+            <mat-sidenav mode="side" [opened]=sideBarOpened #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="50">
+                <app-admin-sidebar (toggleSideBar)=sideBarToggle($event)></app-admin-sidebar>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <router-outlet class="main-content"></router-outlet>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
+</div>
+<!-- <app-long-footer></app-long-footer> -->

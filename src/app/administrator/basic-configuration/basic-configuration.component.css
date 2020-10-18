@@ -1,0 +1,60 @@
+.configure-card {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    /* height: auto; */
+}
+
+
+/* .config-header:h1, h4{
+    margin: auto;
+} */
+
+.info-tab {
+    display: flex;
+    margin-top: 20px;
+}
+
+.info-left {
+    flex: 0 0 30%;
+}
+
+.info-right {
+    flex: 1;
+}
+
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.restaurant-picture {
+    background-color: #dedede;
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+
+.restaurant-picture img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.material-icons.mi-picture {
+    color: #5c5c5c;
+    width: 100%;
+    font-size: 150px;
+    padding: 70px 0;
+    text-align: center;
+}
+
+.material-icons.mi-edit {
+    color: #81a4de;
+    font-size: 35px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}

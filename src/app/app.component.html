@@ -1,0 +1,19 @@
+<ngx-loading-bar [includeSpinner]="false" [color]="'#d86827'" [height]="'3px'"></ngx-loading-bar>
+<router-outlet></router-outlet>
+
+<app-notification-error-alert *ngIf="hasErrorMsg" [errorMsg]="errorMessage" [tryAgain]="retryRequest"
+										(onErrorClosed)="onErrorAlertClosed($event)"
+										(onTryAgain)="onErrorTryAgain($event)">
+</app-notification-error-alert>
+
+<!-- alert for success message. -->
+<app-success-alert *ngIf="hasSuccessMsg" [message]="successMessage"
+						 (onSuccessClosed)="onSuccessAlertClosed($event)">
+</app-success-alert>
+
+<!-- alert for succes message. -->
+<app-status-alert *ngIf="hasOtherMsg" [message]="otherMessage"
+						(onStatusClosed)="onOtherAlertClosed($event)">
+</app-status-alert>
+<app-confirm-alert></app-confirm-alert>
+<app-password-set-retrieval></app-password-set-retrieval>

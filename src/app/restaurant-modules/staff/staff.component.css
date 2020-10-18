@@ -1,0 +1,127 @@
+.configure-card {
+    position: relative;
+    width: 90%;
+    margin: auto;
+}
+
+.menu {
+    width: 100%;
+}
+
+.menu:hover {
+    font-weight: bold;
+    background-color: #e8e8e8;
+}
+
+.no-touchevents .all-menu {
+    overflow-y: hidden;
+}
+
+.no-touchevents .all-menu:hover {
+    overflow-y: scroll;
+}
+
+.info-tab {
+    display: flex;
+    margin-top: 20px;
+}
+
+.info-left {
+    flex: 0 0 30%;
+}
+
+.info-right {
+    flex: 1;
+}
+
+.menu-list-top {
+    display: flex;
+    margin-top: 15px;
+}
+
+.menu-list-top>button {
+    margin-right: 1px;
+}
+
+.menu {
+    cursor: pointer;
+}
+
+.material-icons {
+    cursor: pointer;
+}
+
+.material-icons.md-red {
+    color: #BF3F3F;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.material-icons {
+    padding: 0 14px;
+}
+
+.material-icons.md-light {
+    color: #5D5959
+}
+
+.form-width {
+    width: 80%;
+}
+
+.staff-picture {
+    border-radius: 50%;
+    background-color: #dedede;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+.staff-picture img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.material-icons.mi-picture {
+    color: #5c5c5c;
+    width: 100%;
+    font-size: 150px;
+    padding: 70px 0;
+    text-align: center;
+}
+
+mat-progress-bar {
+    position: absolute;
+    bottom: 0;
+}
+
+.material-icons.mi-edit {
+    color: #81a4de;
+    font-size: 35px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.no-menu {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    /* height: 200px; */
+    /* border-radius: 50%; */
+}
+
+.no-menu>img {
+    /* margin-top: 2; */
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    /* border-radius: 50%; */
+}

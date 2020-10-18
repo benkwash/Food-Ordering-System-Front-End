@@ -1,0 +1,24 @@
+#main-content {
+	height: 100%;
+	padding-top:10%;
+	color: black;
+	background: #f9f9f9;
+}
+
+#border {
+	padding: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	border : 1px solid #989898;
+	min-height: 200px;
+	border-radius: 5px;
+}
+
+section span {font-size: 16px;}
+
+button.btn {
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+

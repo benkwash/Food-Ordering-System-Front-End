@@ -1,0 +1,65 @@
+<div *ngIf="dialogType=='confirmDelivery'" class="dialog-container">
+    <h2 mat-dialog-title> Have you received your order?
+    </h2>
+    <div mat-dialog-content>
+        <p>rate order(optional)</p>
+        <div class="rating">
+            <span class="material-icons star cursor-pointer star-one" (click)=rating(5) [ngClass]="{'star-highlight':reviewRating==5}"> 
+                star
+            </span>
+            <span class="material-icons star cursor-pointer star-two" (click)=rating(4) [ngClass]="{'star-highlight':reviewRating>=4}">
+                star
+            </span>
+            <span class="material-icons star cursor-pointer star-three" (click)=rating(3) [ngClass]="{'star-highlight':reviewRating>=3}">
+                star
+            </span>
+            <span class="material-icons star cursor-pointer star-four" (click)=rating(2) [ngClass]="{'star-highlight':reviewRating>=2}">
+                star
+            </span>
+            <span class="material-icons star cursor-pointer star-five" (click)=rating(1) [ngClass]="{'star-highlight':reviewRating>=1}">
+                star
+            </span>
+        </div>
+
+        <div class="review">
+            <mat-form-field>
+                <mat-label>review</mat-label>
+                <textarea matInput rows=4 name="reviewcomment" [(ngModel)]=reviewComment #name=ngModel> 
+                </textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions class="action-buttons">
+        <button mat-button color="warn" (click)="onNoClick()">no</button>
+        <button mat-button color="primary" (click)="confirmDelivery()">yes
+
+        </button>
+    </div>
+</div>
+
+<div *ngIf="dialogType=='cancelOrder'" class="dialog-container">
+    <h2 mat-dialog-title>cancel order?
+    </h2>
+    <div mat-dialog-content>
+        <div class="form">
+            <form #addmenu=ngForm (submit)=cancelDelivery()>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label>reason (optional)</mat-label>
+                        <textarea rows="4" matInput name="reason" [(ngModel)]=cancelReason #name=ngModel></textarea>
+                    </mat-form-field>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div mat-dialog-actions class="action-buttons">
+        <button mat-button color="warn" (click)="onNoClick()">no</button>
+        <button mat-button color="primary" (click)="cancelDelivery()">yes
+
+        </button>
+    </div>
+</div>

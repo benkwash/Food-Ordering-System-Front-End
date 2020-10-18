@@ -1,0 +1,95 @@
+highcharts-chart {
+    /* position: relative; */
+    max-width: 100%;
+    /* width: 100vw; */
+    /* height: 400px; */
+    display: block;
+}
+
+mat-card {
+    margin: 10px;
+}
+
+.rating-head>h4>.material-icons,
+.user-number>h4>.material-icons {
+    display: inline-flex;
+    vertical-align: top;
+}
+
+.info-tab,
+.rating-no {
+    display: flex;
+    /* margin-top: 20px; */
+}
+
+.info-left {
+    flex: 0 0 30%;
+}
+
+.info-right {
+    flex: 1;
+}
+
+.rating-no>p {
+    flex: 0 0 5%;
+}
+
+.rating {
+    width: 100%;
+}
+
+.rating>mat-card {
+    max-width: 100%;
+    position: relative;
+}
+
+.rating-head {
+    width: 100%;
+    display: flex;
+    margin: auto;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.rating-number>h3 {
+    margin: auto;
+    font-size: 90px !important;
+    margin-bottom: 25px;
+    /* margin-top: 50px; */
+}
+
+.rating-number {
+    padding: 40px 0;
+}
+
+.rating-number>* {
+    text-align: center;
+}
+
+.rating>mat-card {
+    height: 250px;
+}
+
+.rating-number,
+.rating-breakdown {
+    height: 160px;
+}
+
+mat-progress-bar {
+    width: 70%;
+    height: 10px;
+    border-radius: 5px;
+    position: relative;
+    top: 5px;
+}
+
+@media (max-width: 600px) {
+    .rating-number>h3 {
+        margin: auto;
+        font-size: 50px !important;
+        text-align: center;
+        margin-top: 50px;
+    }
+}

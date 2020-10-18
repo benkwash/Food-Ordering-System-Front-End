@@ -1,0 +1,286 @@
+<div class="add-menu" *ngIf="dialogType=='addMenu'">
+    <h1 mat-dialog-title>New menu</h1>
+    <div mat-dialog-content>
+        <div class="add-menu">
+            <div class="form">
+                <form #addmenu=ngForm (submit)="addMenu()">
+                    <div>
+                        <div class="menu-picture">
+                            <span class="material-icons mi-picture cursor-pointer" matTooltip="add photo" *ngIf="!menuForm.picture && !uploading" (click)=fileInput.click()>
+                                fastfood
+                            </span>
+                            <input type="file" name="resphoto" accept="{{acceptedImageTypes}}" (change)="onPhotoAdded($event)" #fileInput hidden>
+                            <img (click)=fileInput.click() matTooltip="update photo" class="cursor-pointer" *ngIf="menuForm.picture" src="{{logoAssestDir}}/{{menuForm.picture}}" alt="menu photo">
+                            <mat-progress-bar *ngIf=uploading color="accent" mode="indeterminate"></mat-progress-bar>
+                        </div>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Menu name</mat-label>
+                            <input matInput name="menuname" [(ngModel)]=menuForm.name #name="ngModel">
+                        </mat-form-field>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Price</mat-label>
+                            <input matInput type="number" name="menuprice" [(ngModel)]=menuForm.price #name=ngModel>
+                        </mat-form-field>
+                        <h4>Ingredients</h4>
+                        <div class="edit-ingredients">
+                            <mat-chip-list class="form-width">
+                                <mat-chip *ngFor="let ingredient of menuForm.ingredients,let i=index">
+                                    {{ingredient.name}}|Gh&#x20B5;{{ingredient.pricePerIncrement}} per inc |max:{{ingredient.maximum}}
+                                    <mat-icon matChipRemove (click)="removeIngredient(i)">cancel</mat-icon>
+                                </mat-chip>
+                            </mat-chip-list>
+                        </div>
+                        <div class="no-ingredient" *ngIf="menuForm.ingredients.length==0">
+                            <p>N/A</p>
+                        </div>
+                        <div class="form-group add-ingredient">
+                            <mat-form-field class="form-width" appearance="standard">
+                                <mat-label>Ingredient name</mat-label>
+                                <input matInput name="niname" [(ngModel)]="newIngredient.name" #name="ngModel">
+                            </mat-form-field>
+
+                            <h4>Can this be increased during order&#63; &#58; No
+                                <mat-slide-toggle color="primary" aria-label="order options" name="niincresase" [(ngModel)]="newIngredient.canBeIncreased" [checked]="newIngredient.canBeIncreased">
+
+                                </mat-slide-toggle>Yes
+                            </h4>
+
+                            <div *ngIf="newIngredient.canBeIncreased">
+                                <mat-form-field class="form-width" appearance="standard">
+                                    <mat-label>Maximum increment</mat-label>
+                                    <input matInput type="number" name="imaximum'+i" [(ngModel)]="newIngredient.maximum" #name="ngModel">
+                                </mat-form-field>
+                                <mat-form-field class="form-width" appearance="standard">
+                                    <mat-label>Price per increment</mat-label>
+                                    <input matInput type="number" name="iprice'+i" [(ngModel)]="newIngredient.pricePerIncrement" #name="ngModel">
+                                </mat-form-field>
+
+                            </div><br>
+                            <button mat-raised-button color="primary" type="button" (click)='addIngredient()'>Add</button>
+                        </div>
+
+                        <p>Options that come with this menu. (E.g A bottle of coke)</p>
+                        <div class="form-group options">
+                            <mat-chip-list class="form-width">
+                                <mat-chip *ngFor="let option of menuForm.options,let i=index">
+                                    {{option.name}}|Gh&#x20B5;{{option.price}}
+                                    <mat-icon matChipRemove color="accent" selected (click)="removeOption(i)">cancel
+                                    </mat-icon>
+                                </mat-chip>
+                            </mat-chip-list>
+
+                        </div>
+                        <div class="no-options" *ngIf="menuForm.options.length==0">
+                            <p>N/A</p>
+                        </div>
+
+                        <div class="add-option">
+                            <div class="form-group">
+                                <mat-form-field class="form-width" appearance="standard">
+                                    <mat-label>Option</mat-label>
+                                    <input matInput name="aoptionname" [(ngModel)]=newOption.name #name=ngModel>
+                                </mat-form-field>
+                                <mat-form-field class="form-width" appearance="standard">
+                                    <mat-label>Price</mat-label>
+                                    <input matInput name="aoptionprice" [(ngModel)]=newOption.price #name=ngModel>
+                                </mat-form-field>
+
+                                <button mat-raised-button color="primary" type="button" (click)="addOption()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div mat-dialog-actions class="action-btns">
+        <span class="example-spacer"></span>
+        <button mat-button color=warn (click)="onNoClick()">cancel</button>
+        <button mat-button color=primary (click)="addMenu()">add</button>
+    </div>
+</div>
+<div class="menu-information" *ngIf="dialogType=='menuInformation'">
+    <div mat-dialog-title>
+        <div class="menu-list-top">
+            <h2>Menu information</h2>
+            <span class="example-spacer"></span>
+            <span class="material-icons md-red" (click)='deleteMenu()' matTooltip="delete" aria-label="Button that displays a tooltip when focused or hovered over">
+                delete
+            </span>
+            <span class="material-icons gray-icon" (click)='menuForm=selectdMenu;editMenu=true' matTooltip="modify" aria-label="Button that displays a tooltip when focused or hovered over">
+                create
+            </span>
+            <span class="material-icons gray-icon" (click)="onNoClick()" matTooltip="close">
+                close
+            </span>
+        </div>
+    </div>
+    <div mat-dialog-content>
+        <div class="selected-menu-info" *ngIf="!editMenu">
+            <mat-divider></mat-divider>
+
+            <div class="menu-picture">
+                <span class="material-icons mi-picture cursor-pointer" matTooltip="add photo" *ngIf="!selectdMenu.picture && !uploading" (click)=fileInput.click()>
+                    fastfood
+                </span>
+                <input type="file" name="resphoto" accept="{{acceptedImageTypes}}" (change)="onPhotoAdded($event)" #fileInput hidden>
+                <img (click)=fileInput.click() matTooltip="update photo" class="cursor-pointer" *ngIf="selectdMenu.picture" src="{{logoAssestDir}}/{{selectdMenu.picture}}" alt="menu photo">
+                <mat-progress-bar *ngIf=uploading color="accent" mode="indeterminate"></mat-progress-bar>
+            </div>
+
+            <div class="info-tab">
+                <div class="info-left">
+                    <p>Name</p>
+                </div>
+                <div class="info-right">
+                    <p>{{selectdMenu.name}}</p>
+                </div>
+            </div>
+
+            <div class="info-tab">
+                <div class="info-left">
+                    <p>Price</p>
+                </div>
+                <div class="info-right">
+                    <p>Gh&#x20B5;{{selectdMenu.price}}</p>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <p>Ingredients</p>
+                </div>
+                <div class="info-right">
+                    <p *ngIf="selectdMenu.ingredients.length==0">N/A</p>
+
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let ingredient of selectdMenu.ingredients">
+                            {{ingredient.name}} | Gh&#x20B5;{{ingredient.pricePerIncrement}} | max:{{ingredient.maximum}}
+                        </mat-chip>
+                    </mat-chip-list>
+
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <p>Options</p>
+                </div>
+                <div class="info-right" *ngIf="selectdMenu.options.length==0">
+                    <p>N/A</p>
+                </div>
+                <div class="info-right">
+                    <p>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let option of selectdMenu.options">
+                                {{option.name}} | Gh&#x20B5;{{option.price}}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="info-tab">
+                <div class="info-left">
+                </div>
+                <div class="info-right">
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="update-menu" *ngIf="editMenu">
+
+            <form #updatemenu=ngForm (submit)="updateMenu()">
+                <div class="form-group">
+                    <mat-form-field class="form-width" appearance="standard">
+                        <mat-label>Menu name</mat-label>
+                        <input matInput name="menuname" [(ngModel)]=menuForm.name #name="ngModel">
+                    </mat-form-field>
+                    <mat-form-field class="form-width" appearance="standard">
+                        <mat-label>Price</mat-label>
+                        <input matInput name="menuprice" [(ngModel)]=menuForm.price #name="ngModel">
+                    </mat-form-field>
+
+                    <h4>Ingredients</h4>
+                    <div class="edit-ingredients">
+                        <mat-chip-list class="form-width">
+                            <mat-chip *ngFor="let ingredient of menuForm.ingredients,let i=index">
+                                {{ingredient.name}}|Gh&#x20B5;{{ingredient.pricePerIncrement}} per inc |max:{{ingredient.maximum}}
+                                <mat-icon matChipRemove (click)="removeIngredient(i)">cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+
+                    </div>
+                    <div class="no-ingredient" *ngIf="menuForm.ingredients.length==0">
+                        <p>N/A</p>
+                    </div>
+                    <div class="form-group add-ingredient">
+                        <mat-form-field class="form-width" appearance="standard">
+                            <mat-label>Ingredient Name</mat-label>
+                            <input matInput name="niname" [(ngModel)]="newIngredient.name" #name="ngModel">
+                        </mat-form-field>
+                        <h4>Can this be increased during order?</h4>
+                        No
+                        <mat-slide-toggle color="primary" aria-label="order options" name="niincresase" [(ngModel)]="newIngredient.canBeIncreased" [checked]="newIngredient.canBeIncreased">
+                        </mat-slide-toggle>Yes
+
+                        <div *ngIf="newIngredient.canBeIncreased">
+                            <mat-form-field class="form-width" appearance="standard">
+                                <mat-label>maximum increment</mat-label>
+                                <input matInput type="number" name="imaximum'+i" [(ngModel)]="newIngredient.maximum" #name="ngModel">
+                            </mat-form-field>
+                            <mat-form-field class="form-width" appearance="standard">
+                                <mat-label>price per increment</mat-label>
+                                <input matInput type="number" name="iprice'+i" [(ngModel)]="newIngredient.pricePerIncrement" #name="ngModel">
+                            </mat-form-field>
+
+                        </div>
+                        <button mat-raised-button color="primary" type="button" (click)='addIngredient()'>add
+                            ingredient</button>
+                    </div>
+
+                    <h4>Options that come with this menu. (E.g A bottle of coke)</h4>
+                    <div class="form-group options">
+                        <mat-chip-list class="form-width">
+                            <mat-chip *ngFor="let option of menuForm.options,let i=index">
+                                {{option.name}}|Gh&#x20B5;{{option.price}}
+                                <mat-icon matChipRemove (click)="removeOption(i)">cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="no-options" *ngIf="menuForm.options.length==0">
+                        <h4>N/A</h4>
+                    </div>
+
+                    <div class="add-option">
+                        <div class="form-group">
+                            <mat-form-field class="form-width" appearance="standard">
+                                <mat-label>Option</mat-label>
+                                <input matInput name="aoptionname" [(ngModel)]=newOption.name #name=ngModel>
+                            </mat-form-field>
+                            <mat-form-field class="form-width" appearance="standard">
+                                <mat-label>Price</mat-label>
+                                <input matInput type="number" name="aoptionprice" [(ngModel)]=newOption.price #name=ngModel>
+                            </mat-form-field>
+
+                            <button mat-raised-button color="primary" type="button" (click)="addOption()">add
+                                option</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions *ngIf=editMenu>
+        <div class="">
+            <!-- <span class="example-spacer"></span> -->
+            <button mat-button color="primary" type="button" (click)="cancelUpdate()">Cancel</button>
+            <button mat-button color="primary" type="submit" (click)="updateMenu()">Save</button>
+        </div>
+
+    </div>
+</div>

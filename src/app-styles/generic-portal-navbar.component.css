@@ -1,0 +1,53 @@
+.nav-bar {
+    overflow: hidden;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    width: 100%;
+    height: 50px;
+}
+
+.right-tools {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.menu-icon {
+    margin-right: 10px;
+}
+
+.product-name {
+    color: #ffffff;
+}
+
+.res-logo {
+    width: 40px;
+    height: 40px;
+    margin-left: -5px;
+}
+
+h4 {
+    font-family: 'Anonymous Pro';
+    font-size: 22px;
+}
+
+
+/*===============================
+	bigger screen(desktop) styles
+=================================*/
+
+@media(min-width: 700px) {}
+
+
+/*===============================
+	smaller screen(mobile) styles
+=================================*/
+
+@media (max-width: 700px) {
+    .hide-menu-text {
+        display: none;
+    }
+}

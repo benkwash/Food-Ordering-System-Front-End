@@ -1,0 +1,43 @@
+h1{
+    text-align: center;
+}
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+.form-width{
+    width: 100%;
+}
+.radio-button {
+    margin: 5px;
+}
+.staff-picture{
+    border-radius: 50%;
+    background-color: #dedede;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    margin-bottom: 20px;
+
+}
+.staff-picture img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+
+}
+
+.material-icons.mi-picture{
+    color: #5c5c5c;
+    width: 100%;
+    font-size: 150px;
+    padding: 70px 0;
+    text-align: center;
+}
+mat-progress-bar{
+    position: absolute;
+    bottom: 0;
+}

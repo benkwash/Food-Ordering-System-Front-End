@@ -1,0 +1,30 @@
+<ng-template #modalTemplate>
+    <div id="terms">
+        <section id="top-header">
+            <h3>Terms and Conditions</h3>
+        </section>
+        <section id="terms-condition-content">
+            <section class="section-area">
+                <h4>Last Revised: Some date be</h4>
+            </section>
+            <section class="section-area">
+                <p>The terms and conditions contain legal obligations, please read them carefully. You know what I'm saying</p>
+            </section>
+
+            <section class="section-area">
+                <div class="small-header">YOUR AGREEMENT</div>
+                <div class="small-section-area">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur rutrum convallis. Donec at vestibulum felis. Donec sit amet nibh metus. Aenean eu eros ligula. Nam in pharetra metus. Aenean lacinia dolor a consequat cursus. Nullam sollicitudin
+                    ipsum nec fermentum auctor. Nullam tempus sit amet ligula sit amet finibus. Maecenas erat lorem, vulputate sed nibh non, posuere viverra arcu. Sed quis orci sit amet dui eleifend vulputate. Duis sagittis varius dui, ac faucibus purus
+                    ultrices et. </div>
+            </section>
+        </section>
+        <div *ngIf="enforceAgreement">
+            <button class="btn btn-default" mat-button color="primary" (click)="acceptTermsAndConditions()">Accept</button>
+            <button class="btn btn-default" mat-button color="warn" (click)="declineTermsAndConditions()">Decline</button>
+        </div>
+        <section id="btn-section" *ngIf="!enforceAgreement">
+            <button mat-raised-button color="warn" class=" pull-right" (click)="declineTermsAndConditions()">Close</button>
+        </section>
+    </div>
+</ng-template>

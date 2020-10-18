@@ -1,0 +1,223 @@
+<div class="configure-card">
+    <div class="config-header">
+        <h2>Restaurant Basic Configuration</h2>
+        <h4>Basic configurations of your restaurant</h4>
+        <hr>
+    </div>
+    <div class="restaurant-picture">
+        <span *ngIf="!formState.picture" class="material-icons mi-picture">
+            panorama
+        </span>
+        <span class="material-icons mi-edit cursor-pointer" matTooltip="update restaurant picture" (click)=fileInput.click()>
+            create
+        </span>
+        <input type="file" name="resphoto" accept="{{acceptedImageTypes}}" (change)="onPhotoAdded($event)" #fileInput hidden>
+        <img *ngIf="formState.picture" src="{{logoAssestDir}}/{{formState.picture}}" alt="res logo">
+        <mat-progress-bar *ngIf=uploading color="accent" mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="config-info" *ngIf="!editMode">
+
+        <div class="configurations">
+            <h4>Current location</h4>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Region</h4>
+                </div>
+                <div class="info-right">
+                    <h4>{{formState.region}}</h4>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>City</h4>
+                </div>
+                <div class="info-right">
+                    <h4>{{currentLocation.city}}</h4>
+                </div>
+            </div>
+            <div class="info-tab" *ngIf="formState.delivery">
+                <div class="info-left">
+                    <h4>Delivery cost</h4>
+                </div>
+                <div class="info-right">
+                    <h4>Gh&#x20B5;{{currentLocation.deliveryCost}}</h4>
+                </div>
+            </div>
+            <div class="info-tab" *ngIf="formState.delivery" aria-label="deliver cities">
+                <div class="info-left">
+                    <h4>Other delivery locations</h4>
+                </div>
+                <mat-chip-list class="info-right" *ngIf="formState.cities.length!=0">
+                    <mat-chip color="primary" *ngFor="let locate of formState.cities,let i=index">
+                        {{locate.city}}|Gh&#x20B5;{{locate.deliveryCost}}
+                    </mat-chip>
+                </mat-chip-list>
+                <h4 class="info-right" *ngIf="formState.cities.length==0">N/A</h4>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <p>Delivery Option</p>
+                </div>
+                <div class="info-right">
+                    <h4 *ngIf="formState.delivery">Enabled</h4>
+                    <h4 *ngIf="!formState.delivery">Disabled</h4>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Pickup Option</h4>
+                </div>
+                <div class="info-right">
+                    <h4 *ngIf="formState.pickup">Enabled</h4>
+                    <h4 *ngIf="formState.pickup==false">Disabled</h4>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Table Reservation</h4>
+                </div>
+                <div class="info-right">
+                    <h4 *ngIf="!formState.tableReservation">Disabled</h4>
+                    <div *ngIf="formState.tableReservation">
+                        <div>
+                            <h4>Total number of tables: {{formState.totalTables}} </h4>
+                            <h4>Total number of seats: {{formState.totalChairs}}</h4>
+                            <h4>Maximum number of seats per table: {{formState.maximumChairPerTable}}</h4>
+                            <h4>Cost of reserving a table: Gh&#x20B5;{{formState.costPerTable}}</h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="editform" *ngIf="editMode">
+        <form #form="ngForm" (submit)="submitForm()">
+
+            <div class="form-group">
+                <h4>Do you offer delivery options?</h4>
+                No
+                <mat-slide-toggle color="primary" aria-label="delivery options" name="offerdelivery" [(ngModel)]="formState.delivery" [checked]="formState.delivery">
+                </mat-slide-toggle>Yes
+            </div>
+
+            <h4>Location</h4>
+            <mat-form-field>
+                <mat-label>Current Region</mat-label>
+                <mat-select required name="cregion" [(ngModel)]="formState.region">
+                    <mat-option *ngFor="let location of locations" [value]="location">
+                        {{location}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-width">
+                <mat-label>City</mat-label>
+                <input matInput required name="ccity" [(ngModel)]="currentLocation.city" #ccity="ngModel">
+                <mat-error *ngIf="!ccity.valid">
+                    <h4>required</h4>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-width" *ngIf="formState.delivery">
+                <mat-label>Delivery cost</mat-label>
+                <input matInput type="number" name="cdeliverycost" [(ngModel)]="currentLocation.deliveryCost" #cdeliverycost="ngModel">
+                <mat-error *ngIf="cdeliverycost.valid">
+                    <h4>required</h4>
+                </mat-error>
+                <span matPrefix>Gh:&nbsp;</span>
+            </mat-form-field>
+
+            <div class="location" *ngIf="formState.delivery">
+                <div class="form-group">
+                    <h4>Which other locations do you deliver to?</h4>
+
+                    <mat-chip-list class="form-width" *ngIf="formState.cities.length!=0">
+                        <mat-chip *ngFor="let locate of formState.cities,let i=index">
+                            {{locate.city}}|Gh:{{locate.deliveryCost}}
+                            <mat-icon matChipRemove (click)="removeCity(i)">cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+                <div class="form-group">
+                    <mat-form-field class="form-width">
+                        <mat-label>City</mat-label>
+                        <input matInput name="ncity" [(ngModel)]=newCity #ncity="ngModel">
+                        <mat-error *ngIf="!ncity.valid">
+                            <h4>required</h4>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="form-width">
+                        <mat-label>Delivery cost</mat-label>
+                        <input matInput type="number" name="ndelivery" [(ngModel)]=newDeliveryCost #ndelivery="ngModel">
+                        <span matPrefix>Gh:&nbsp;</span>
+                        <mat-error *ngIf="!ndelivery.valid">
+                            <h4>required</h4>
+                        </mat-error>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="button" (click)="addCity()">add city</button>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="form-group order-pickup">
+                <h4>Do you offer order pickup option?</h4>
+                No
+                <mat-slide-toggle color="primary" aria-label="order options" name="offerpickup" [(ngModel)]="formState.pickup" [checked]="formState.pickup">
+
+                </mat-slide-toggle>Yes
+            </div>
+
+            <div class="form-group table-reservation">
+                <p>Do you currrently offer the option to reserve tables/seats?</p>
+                No
+                <mat-slide-toggle color="primary" aria-label="order options" name="offertable" [(ngModel)]="formState.tableReservation" [checked]="formState.tableReservation">
+
+                </mat-slide-toggle>Yes
+
+                <div *ngIf="formState.tableReservation">
+                    <mat-form-field class="form-width">
+                        <mat-label>number of tables</mat-label>
+                        <input matInput type="number" name="tablesnumber" [(ngModel)]="formState.totalTables">
+                    </mat-form-field>
+                    <mat-form-field class="form-width">
+                        <mat-label>number of seats</mat-label>
+                        <input matInput type="number" name="seatsnumber" [(ngModel)]="formState.totalChairs">
+                    </mat-form-field>
+                    <mat-form-field class="form-width">
+                        <mat-label>maximium seat per table</mat-label>
+                        <input matInput type="number" name="maximumseats" [(ngModel)]="formState.maximumChairPerTable">
+                    </mat-form-field>
+                    <mat-form-field class="form-width">
+                        <mat-label>cost per table</mat-label>
+                        <input matInput type="number" name="tablecost" [(ngModel)]="formState.costPerTable" #tablecost="ngModel">
+                    </mat-form-field>
+                    <mat-error *ngIf="!tablecost.valid">
+                        <h4>required</h4>
+                    </mat-error>
+
+                </div>
+            </div>
+
+
+        </form>
+        <!-- End of form -->
+    </div>
+    <div class="form-group btn-container">
+        <div class="edit-done-btn">
+            <button mat-raised-button color="primary" type="button" name="editform" (click)="editMode=!editMode" *ngIf="!editMode">
+                Edit
+            </button>
+            <button mat-raised-button color="warn" type="button" name="cancel" (click)="editMode=!editMode" *ngIf="editMode">
+                cancel
+            </button>
+            <button mat-raised-button color="primary" type="button" name="done" (click)="submitForm()" *ngIf="editMode" [disabled]="isSubmitting">
+                Update
+            </button>
+        </div>
+    </div>
+
+</div>

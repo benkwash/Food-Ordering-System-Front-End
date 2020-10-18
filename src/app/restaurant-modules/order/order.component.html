@@ -1,0 +1,97 @@
+<div class="configure-card">
+
+    <div class="title-head">
+        <h2>Restaurant orders</h2>
+        <span class="material-icons cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='active'}" (click)="selectedFilter='active';filterOrders('active')" matTooltip="active orders">
+            list_alt
+        </span>
+        <span class="material-icons cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='waiting'}" (click)="selectedFilter='waiting';filterOrders('waiting')" matTooltip="awaiting confirmation">
+            hourglass_bottom
+        </span>
+        <span class="material-icons cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='completed'}" (click)="selectedFilter='completed';filterOrders('completed')" matTooltip="completed orders">
+            assignment_turned_in
+        </span>
+        <!-- <button mat-menu-item (click)=allOrders()>All</button>
+        <button mat-menu-item (click)="filterOrders('pickup')">Pickup</button>
+        <button mat-menu-item (click)="filterOrders('delivery')">Delivery</button>
+        <button mat-menu-item (click)="filterOrders('table')">Seat reservation</button> -->
+    </div>
+
+    <!-- <div class="scroll-menu">
+            <div *ngIf="allActiveOrders.length!=0">
+                <mat-list>
+                    <mat-list-item *ngFor="let order of allActiveOrders; let i=index; last as last" [ngClass]="{'menu': true}" (click)="clickedOrder(order._id)">
+
+                        <mat-icon mat-list-icon class="md-blue" *ngIf="order.mode=='table'">deck</mat-icon>
+                        <mat-icon mat-list-icon class="md-turk" *ngIf="order.mode=='pickup'">directions_walk</mat-icon>
+                        <mat-icon mat-list-icon class="md-green" *ngIf="order.mode=='delivery'">local_shipping</mat-icon>
+                        <h4 mat-line>ID: {{order.orderID}} (Gh{{order.total}})</h4>
+
+                        <p mat-line *ngIf="order.mode=='delivery'">delivery</p>
+                        <p mat-line *ngIf="order.mode=='pickup'">pickup</p>
+                        <p mat-line *ngIf="order.mode=='table'">seat reservation</p>
+                        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+            <div *ngIf="allActiveOrders.length==0" class="no-menu">
+                <h4>No Orders</h4>
+            </div>
+
+        </div> -->
+
+
+
+
+
+    <mat-card>
+        <table mat-table [dataSource]="allActiveOrders" class="cursor-pointer">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="orderID">
+                <th mat-header-cell *matHeaderCellDef> Order ID </th>
+                <td mat-cell *matCellDef="let element">#{{element.orderID}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.Date| date:'shortDate'}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="mode">
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.mode}}
+                </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let element"> {{element.total | currency:'GHS'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="mobile-display-disable"> Status </th>
+                <td mat-cell *matCellDef="let element" class="mobile-display-disable">
+                    <span *ngIf="!element.processing && selectedFilter=='active'" class="md-red">pending</span>
+                    <span *ngIf="element.processing && selectedFilter=='active'" class="md-blue">processing</span>
+                    <span *ngIf="selectedFilter=='waiting'" class="md-blue">awaiting confirmation</span>
+                    <span *ngIf="element.cancelled.cancelled && selectedFilter=='completed'" class="md-red">cancelled</span>
+                    <span *ngIf="element.customerConfirmation && selectedFilter=='completed'" class="md-blue">completed</span>
+                    <!-- {{element.total | currency:'GHS'}} -->
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="allOrdersColumn"></tr>
+            <tr mat-row *matRowDef="let row; columns: allOrdersColumn;" (click)=clickedOrder(row._id)></tr>
+        </table>
+    </mat-card>
+
+
+
+</div>

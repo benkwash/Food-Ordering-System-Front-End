@@ -1,0 +1,44 @@
+<!-- <div class="main-form-content"> -->
+<div class="every-page">
+
+    <div class="all-menu ">
+        <div class="menu-list-top pd-10">
+            <h3>All restaurant menu</h3>
+            <span class="example-spacer"></span>
+            <!-- add new menu icon -->
+            <span class="material-icons gray-icon" (click)="addMenu()" matTooltip="add a new menu">
+                playlist_add
+            </span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="scroll-menu pd-10">
+
+            <div *ngIf="allMenu.length!=0">
+                <mat-list>
+                    <mat-list-item *ngFor="let menu of allMenu; let i=index; last as last" [ngClass]="{'menu': true, 'menu-clicked': menu.clickActive}" (click)="showSelectedMenu(menu._id)">
+                        <mat-icon mat-list-icon *ngIf="!menu.picture" class="md-light">fastfood</mat-icon>
+                        <img mat-list-icon *ngIf="menu.picture" src="{{logoAssestDir}}/{{menu.picture}}">
+                        <h4 mat-line>{{menu.name}}</h4>
+                        <h4 mat-line>Gh&#x20B5;{{menu.price}}</h4>
+                        <!-- <h4 mat-line>{{folder.name}}</h4>
+                        <p mat-line class="demo-2"> {{folder.updated}} </p> -->
+                        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="allMenu.length==0" class="no-menu">
+        <img src="../../../assets/images/no-menu.jpg" alt="">
+        <h4>No menu</h4>
+        <span class="material-icons md-light" (click)="addMenu()" matTooltip="add a new menu" aria-label="Button that displays a tooltip when focused or hovered over">
+            playlist_add
+        </span>
+    </div>
+
+
+</div>
+<app-add-button (click)=addMenu()>
+
+</app-add-button>
+<!-- </div> -->

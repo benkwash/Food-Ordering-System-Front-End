@@ -1,0 +1,142 @@
+<ng-container *ngIf="signUpPhase == 1">
+    <div class="signup-form">
+        <form (ngSubmit)="onSubmitSignUp()" #form="ngForm">
+            <h2>Sign Up</h2>
+            <p>Please fill in this form to create an account!</p>
+            <hr>
+            <mat-form-field class="form-width" appearance=standard>
+                <mat-label>First name</mat-label>
+                <input matInput [(ngModel)]="formState.fName.value" required name="fName" pattern="{{nameRegex}}" #fname="ngModel">
+                <mat-error *ngIf="fname.touched && !fname.valid && formState.fName.value!=''">
+                    {{formState.fName.error}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-width" appearance=standard>
+                <mat-label>Last name</mat-label>
+                <input matInput [(ngModel)]="formState.lName.value" required name="lName" pattern="{{nameRegex}}" #lname="ngModel">
+                <mat-error *ngIf="lname.touched && !lname.valid && formState.lName.value!=''">
+                    {{formState.lName.error}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-width" appearance=standard>
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="formState.email.value" name="email" required pattern="{{emailRegex}}" #email="ngModel" (change)="onEmailChange()">
+                <mat-error *ngIf="formState.email.value !='' && !isCheckingEmail && ((email.touched && !email.valid) || !formState.email.valid)">
+                    {{formState.email.error}}
+                </mat-error>
+            </mat-form-field>
+            <div *ngIf="isCheckingEmail">
+                <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+                </mat-progress-bar>
+            </div>
+            <mat-form-field class="form-width" appearance=standard>
+                <mat-label>password</mat-label>
+                <input matInput [type]="!passwordView ? 'password' : 'text'" [(ngModel)]="formState.password.value" name="password" required pattern="{{passwordRegex}}" #password="ngModel" (change)="validateNewPassword();onPasswordConfirm()">
+                <button mat-icon-button matSuffix (click)="passwordView = !passwordView" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordView">
+                    <mat-icon>{{!passwordView ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                <mat-error *ngIf=" formState.password.value!='' &&password.touched && !password.valid || !isPasswordStringEnough">
+                    {{formState.password.error}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-width form-group" appearance=standard>
+                <mat-label>confirm password</mat-label>
+                <input matInput [type]="!confirmPasswordView ? 'password' : 'text'" [(ngModel)]="formState.passwordConfirm.value" name="confirmPassword" required pattern="{{passwordRegex}}" (change)="onPasswordConfirm()" #passwordConf="ngModel" [ngClass]="{invalid:!formState.passwordConfirm.valid}">
+                <button mat-icon-button matSuffix (click)="confirmPasswordView = !confirmPasswordView" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="confirmPasswordView">
+                    <mat-icon>{{!confirmPasswordView ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="formState.passwordConfirm.value!='' && passwordConf.touched && !passwordConf.valid || !formState.passwordConfirm.valid">
+                    {{formState.passwordConfirm.error}}
+                </mat-error>
+            </mat-form-field>
+
+            <div>
+                <span class="checkbox-inline">
+                    
+                    
+                    <p><mat-checkbox color="primary" value="true" name="agreetoterms" [(ngModel)]="agreeToTermsValidate" color="primary">
+                    </mat-checkbox>
+                        I accept the
+                            <a (click)="openTermsAndConditions()">terms and conditions</a>
+                            pertaining the use of this platform.
+                    </p>
+                </span>
+                <app-terms-conditions *ngIf="showTermsComponent" [enforceAgreement]="true" (acceptStatus)="processAcceptTermsStatus($event)">
+                </app-terms-conditions>
+            </div>
+            <div class="form-group">
+                <button mat-raised-button color="primary" name="submit" [disabled]="isSubmitting || !form.valid || !isPasswordStringEnough ||
+                                !formState.passwordConfirm.valid|| !formState.email.valid || !agreeToTermsValidate" (click)="onSubmitSignUp()">
+                        Sign Up
+                </button>
+            </div>
+        </form>
+        <label>
+            <div class=" hint-text ">Already have an account? <a [routerLink]="[ '/signIn']" [queryParams]="{restaurantID:queryParameters.restaurantID,city:queryParameters.city}">Login here</a></div>
+        </label>
+    </div>
+    <!-- End of form -->
+</ng-container>
+<ng-container *ngIf="signUpPhase == 2">
+    <div class="signup-form">
+        <form (ngSubmit)="onSubmitVerificationCode()" #form1="ngForm">
+            <h2>Email Account Verification</h2>
+            <p>Kindly check your email for your account verification code.</p>
+            <hr>
+            <div class="section-group">
+                <h4 [ngClass]="{'text-danger':!emailVerificationSent}">
+                    <ng-container *ngIf="emailVerificationSent">
+                        Email Verification successfully sent.
+                    </ng-container>
+                    <ng-container *ngIf="!emailVerificationSent">
+                        Email Verification sending failed. Please try again.
+                    </ng-container>
+                </h4>
+            </div>
+
+            <mat-form-field class="form-width" appearance=standard>
+                <mat-label>verification code</mat-label>
+                <input matInput [(ngModel)]="verificationCode" required name="verificationCode" (change)="onChangeVerification()" #code="ngModel">
+                <mat-error *ngIf="verificationCodeSubmitBtnClicked &&
+                (!code.valid || !verificationCodeValid)">
+                    {{verificationCodeErrMsg}}
+                </mat-error>
+            </mat-form-field>
+
+            <div class="form-group">
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting || !form1.valid || !verificationCode">
+                    Verify Account
+                </button>
+            </div>
+            <div class=" hint-text ">No verification code? <a (click)="resendVerificationEmail()">Resend code</a></div>
+
+        </form>
+    </div>
+</ng-container>
+<ng-container>
+    <!-- *ngIf="signUpPhase == 3" -->
+    <!-- <form (ngSubmit)="updateRecoveryOptions()" #recoveryForm="ngForm">
+        <div class="section-group">
+            <label class="text-uppercase">Recovery number</label>
+            <input type="text" [(ngModel)]="recoveryOptions.number" name="recoveryNumber" class="form-control input-group" placeholder="mobile number" pattern="{{numberRegex}}" #telephone="ngModel">
+            <div class="text-danger" *ngIf="recoveryOptions.number && !telephone.valid">
+                {{numberErrMsg}}
+            </div>
+        </div>
+        <div class="section-group">
+            <label class="text-uppercase">Alternative email</label>
+            <input type="text" [(ngModel)]="recoveryOptions.email" name="recoveryEmail" class="form-control input-group" placeholder="something@example.com" pattern="{{emailRegex}}" email #emailM="ngModel">
+            <div class="text-danger" *ngIf="recoveryOptions.email && !emailM.valid">
+                {{emailErrMsg}}
+            </div>
+        </div>
+        <div class="section-group">
+            <button type="submit" class="btn pull-right next-btn" [disabled]="isSubmitting || !recoveryForm.valid ||
+                                (!recoveryOptions.number && !recoveryOptions.email)">
+                        UPDATE ACCOUNT
+                    </button>
+        </div>
+    </form> -->
+</ng-container>

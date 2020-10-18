@@ -1,0 +1,48 @@
+<div class="main-page">
+    <mat-card>
+        <div class="profile-card">
+            <div class="header">
+                <h2>{{staffName}}</h2>
+            </div>
+
+            <span *ngIf="!staffPicture" class="material-icons res-picture">
+                face
+            </span>
+            <img *ngIf="staffPicture" src="{{logoAssestDir}}/{{staffPicture}}" alt="">
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <div class="quick-links">
+            <div class="header">
+                <h2>
+                    Quick links
+                </h2>
+            </div>
+
+            <div class="home-links">
+                <mat-nav-list>
+                    <a mat-list-item routerLink="/restaurant/staff/manage/menu" *ngIf="permissions.menu">
+                        Restaurant menu
+                    </a>
+                    <a mat-list-item routerLink="/restaurant/staff/manage/staff" *ngIf="permissions.staff">
+                        Restaurant staff
+                    </a>
+                    <a mat-list-item routerLink="/restaurant/staff/manage/orders" *ngIf="permissions.orders">
+                        Restaurant orders
+                    </a>
+                    <a mat-list-item routerLink="/restaurant/staff/manage/delivery" *ngIf="permissions.delivery">
+                        Restaurant deliveries
+                    </a>
+                    <a mat-list-item routerLink="/restaurant/staff/manage/rating" *ngIf="permissions.rating">
+                        Restaurant rating and reviews
+                    </a>
+                    <a mat-list-item routerLink="/restaurant/staff/manage/accounts" *ngIf="permissions.accounts">
+                        Accounts and revenue
+                    </a>
+
+                </mat-nav-list>
+            </div>
+        </div>
+    </mat-card>
+</div>

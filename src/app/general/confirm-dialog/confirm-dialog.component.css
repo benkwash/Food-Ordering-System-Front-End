@@ -1,0 +1,22 @@
+.action-btns {
+    display: flex;
+    margin: auto;
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+/* @media (max-width: 600px) {
+    .cdk-overlay-pane {
+      max-width: 300px !important;
+      max-height: 200px !important;
+      width: 300px;
+        height: 200px;
+    }
+  }
+
+  .cdk-overlay-pane{
+        max-width: 300px;
+        max-height: 200px;
+        width: 300px;
+        height: 200px;
+  } */

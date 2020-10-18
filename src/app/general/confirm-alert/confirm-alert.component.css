@@ -1,0 +1,20 @@
+.modal-footer {
+    padding-top:10px;
+    padding-bottom: 10px;
+}
+
+.modal-body {
+    padding-bottom: 0;
+}
+
+.modal-footer .btn {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/*-- print styles --*/
+@media print {
+    .modal, .modal-body {
+        display: none !important;
+    }
+}

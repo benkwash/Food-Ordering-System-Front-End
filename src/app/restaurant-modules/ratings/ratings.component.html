@@ -1,0 +1,153 @@
+<div class="rating">
+    <mat-card>
+        <div class="rating-head">
+            <h3>Customer rating</h3>
+
+        </div>
+        <div class="rating-body info-tab">
+            <div class="rating-number info-left">
+                <h3>
+                    <!-- {{resRating.rating}} -->
+                    {{resRating.rating | number:'1.0-1'}}
+                </h3>
+                <div class="star-rating">
+                    <span class="material-icons rating-star" [ngClass]="{'star-colored':resRating.rating>=1}"> 
+                            star
+                        </span>
+                    <span class="material-icons rating-star" [ngClass]="{'star-colored':resRating.rating>=2}"> 
+                            star
+                        </span>
+                    <span class="material-icons rating-star" [ngClass]="{'star-colored':resRating.rating>=3}"> 
+                            star
+                        </span>
+                    <span class="material-icons rating-star" [ngClass]="{'star-colored':resRating.rating>=4}"> 
+                            star
+                        </span>
+                    <span class="material-icons rating-star" [ngClass]="{'star-colored':resRating.rating==5}"> 
+                            star
+                        </span>
+                </div>
+                <div class="user-number">
+                    <h4><span class="material-icons "> 
+                            person
+                        </span>{{resRating.outOf}}</h4>
+                </div>
+            </div>
+            <div class="rating-breakdown info-right">
+                <div class="rating-no">
+                    <p>5</p>
+                    <mat-progress-bar mode="determinate" [value]=resRating.breakdown.five></mat-progress-bar>
+                </div>
+                <div class="rating-no">
+                    <p>4</p>
+                    <mat-progress-bar mode="determinate" [value]=resRating.breakdown.four></mat-progress-bar>
+                </div>
+                <div class="rating-no">
+                    <p>3</p>
+                    <mat-progress-bar mode="determinate" [value]=resRating.breakdown.three></mat-progress-bar>
+                </div>
+                <div class="rating-no">
+                    <p>2</p>
+                    <mat-progress-bar mode="determinate" [value]=resRating.breakdown.two></mat-progress-bar>
+                </div>
+                <div class="rating-no">
+                    <p>1</p>
+                    <mat-progress-bar mode="determinate" [value]=resRating.breakdown.one></mat-progress-bar>
+                </div>
+
+            </div>
+        </div>
+    </mat-card>
+
+
+</div>
+<div class="reviews-card">
+    <mat-card>
+        <div class="review-title">
+            <h3>Reviews</h3>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="reviews">
+            <div class="no-reviews" *ngIf='resReviews.length==0'>
+                <h3>No reviews</h3>
+            </div>
+            <div class="all-reviews" *ngFor="let review of resReviews; let i=index; last as last">
+                <div class="a-review">
+                    <div class="review-head">
+                        <h4>
+                            <span class="material-icons">face</span> {{review.fName}} {{review.lName}}
+                        </h4>
+                        <!-- <span class="example-spacer"></span> -->
+                    </div>
+                    <div class="review-rating">
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':review.review.rating>=1}"> 
+                            star
+                        </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':review.review.rating>=2}"> 
+                            star
+                        </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':review.review.rating>=3}"> 
+                            star
+                        </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':review.review.rating>=4}"> 
+                            star
+                        </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':review.review.rating==5}"> 
+                            star
+                        </span>
+                    </div>
+                    <div class="review-date">
+                        <p>{{review.review.date | date:"short" }}</p>
+                    </div>
+                    <div class="review-comment">
+                        <p>
+                            {{review.review.comment}}
+                        </p>
+                    </div>
+
+                    <mat-expansion-panel *ngIf="review.review.replies.length!=0">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                replies
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <!-- nothing here -->
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="review-replies" *ngFor="let reply of review.review.replies">
+                            <div class="a-reply">
+
+                                <div class="reply-head">
+                                    <h4 *ngIf="review.customerID==reply.by">
+                                        <span class="material-icons">face</span> {{review.fName}} {{review.lName}}&nbsp;&nbsp;&nbsp; {{reply.date | date:"short" }}
+                                    </h4>
+                                    <h4 *ngIf="review.customerID!=reply.by">
+                                        <span class="material-icons">storefront</span>Restaurant&nbsp;&nbsp;&nbsp; {{reply.date | date:"short" }}
+                                    </h4>
+                                </div>
+                                <div class="reply-comment">
+                                    <p>
+                                        {{reply.reply}}
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+
+                    <div class="reply-action">
+                        <mat-form-field appearance="standard">
+                            <mat-label>reply</mat-label>
+                            <input (keydown.enter)="sendReply(review._id)" matInput type="text" name="review.name" [(ngModel)]=review.reply>
+                            <mat-icon (click)="sendReply(review._id)" matSuffix matTooltip="send reply" matTooltipPosition='below' class="cusor-pointer">
+                                send
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+            </div>
+        </div>
+    </mat-card>
+</div>

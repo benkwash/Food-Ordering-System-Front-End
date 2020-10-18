@@ -1,0 +1,69 @@
+<mat-toolbar color="primary" class="nav-bar">
+
+    <span class="material-icons cursor-pointer menu-icon" (click)="sidebarToggle()">
+        menu
+    </span>
+
+    <h4 [routerLink]="['/restaurant/staff/home']" class="product-name curser-pointer">
+        {{productName}}
+        <img class="res-logo" src="../../../assets/images/ben-comecho-logo.png" alt="">
+    </h4>
+    <span class="example-spacer"></span>
+
+
+    <!-- <button mat-button class="right-tools" [routerLink]="['/restaurant/staff/home']">
+        <mat-icon>house</mat-icon> 
+        home
+    </button> -->
+
+    <button mat-button class="right-tools" [matMenuTriggerFor]="resManage">
+        <mat-icon>toc</mat-icon>
+        <span class="hide-menu-text">
+            manage
+        </span>
+    </button>
+    <mat-menu #resManage="matMenu" xPosition="before">
+        <button mat-menu-item *ngIf="permissions.menu" [routerLink]="['/restaurant/staff/manage/menu']">
+            <mat-icon>menu</mat-icon> 
+            menu
+        </button>
+        <button mat-menu-item *ngIf="permissions.staff" [routerLink]="['/restaurant/staff/manage/staff']">
+            <mat-icon>person_outline</mat-icon> 
+            staff
+        </button>
+        <button mat-menu-item *ngIf="permissions.orders" [routerLink]="['/restaurant/staff/manage/orders']">
+            <mat-icon>list_alt</mat-icon> 
+            orders
+        </button>
+        <button mat-menu-item *ngIf="permissions.delivery" [routerLink]="['/restaurant/staff/manage/delivery']">
+            <mat-icon>local_shipping</mat-icon> 
+            deliveries
+        </button>
+        <button mat-menu-item *ngIf="permissions.rating" [routerLink]="['/restaurant/staff/manage/rating']">
+            <mat-icon>star_half</mat-icon> 
+            rating and reviews
+        </button>
+        <button mat-menu-item *ngIf="permissions.accounts" [routerLink]="['/restaurant/staff/manage/accounts']">
+            <mat-icon>account_balance_wallet</mat-icon> 
+            accounts and revenue
+        </button>
+    </mat-menu>
+
+    <button mat-button class="right-tools curser-pointer" [matMenuTriggerFor]="beforeMenu">
+        <span class="hide-menu-text">
+            Hey {{staffName}}
+        </span>
+        <span class="material-icons" > account_circle </span>
+    </button>
+    <!-- <span class="material-icons right-tools curser-pointer" [matMenuTriggerFor]="beforeMenu"> account_circle </span> -->
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item [routerLink]="['/restaurant/staff/account']">
+            <mat-icon>person</mat-icon>
+            my account
+        </button>
+        <button mat-menu-item [routerLink]="['/logout']">
+            <mat-icon>login</mat-icon>
+            logout
+        </button>
+    </mat-menu>
+</mat-toolbar>

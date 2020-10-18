@@ -1,0 +1,231 @@
+<div class="main-card">
+    <div class="sub-card">
+        <h2 class="text-center">
+            User Account Settings<br>
+            <small>Update recovery options or change password</small>
+        </h2>
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Account recovery options
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        recovery information
+                        <mat-icon>account_circle</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="recovery-options">
+                    <!-- <h3>Account Recovery Options</h3> -->
+                    <form (ngSubmit)="submitRecoveryOptions()" #form="ngForm">
+                        <mat-form-field appearance="standard" class="form-width">
+                            <mat-label>recovery phone number</mat-label>
+                            <input matInput type="text" [(ngModel)]="formState.telephone" name="number" #number="ngModel" pattern="{{regex.number}}" placeholder="mobile number">
+                            <button mat-icon-button matSuffix type="button">
+                            <mat-icon>phone</mat-icon>
+                        </button>
+                            <mat-error *ngIf="formState.telephone && number.touched && !number.valid">
+                                {{errors.number}}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" class="form-width">
+                            <mat-label>recovery email</mat-label>
+                            <input matInput type="email" name="email" email placeholder="recovery email" [(ngModel)]="formState.email" pattern="{{regex.email}}" #email="ngModel">
+                            <button mat-icon-button matSuffix type="button">
+                            <mat-icon>email</mat-icon>
+                        </button>
+                            <mat-error *ngIf="formState.email && email.touched && !email.valid">
+                                {{errors.email}}
+                            </mat-error>
+                        </mat-form-field>
+                        <!-- <div class="section-group">
+                            <label class="text-uppercase">phone number <i class="fa fa-phone"></i></label>
+                            <input class="form-control" type="text" [(ngModel)]="formState.telephone" name="number" #number="ngModel" pattern="{{regex.number}}" placeholder="mobile number">
+                            <div class="text-danger" *ngIf="formState.telephone && number.touched && !number.valid">
+                                {{errors.number}}
+                            </div>
+                        </div>
+                        <div class="section-group">
+                            <label class="text-uppercase">Email <i class="fa fa-envelope"></i></label>
+                            <input class="form-control" type="email" name="email" email placeholder="recovery email" [(ngModel)]="formState.email" pattern="{{regex.email}}" #email="ngModel">
+                            <div class="text-danger" *ngIf="formState.email && email.touched && !email.valid">
+                                {{errors.email}}
+                            </div>
+                        </div> -->
+                        <div>
+                            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Change password
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        password information
+                        <mat-icon>vpn_key</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <!-- form -->
+                <form (ngSubmit)="submitChangePassword()" #passwordForm="ngForm">
+                    <mat-form-field appearance="standard" class="form-width">
+                        <mat-label>Old password</mat-label>
+                        <input matInput type="password" name="oldPassword" #oldPassword="ngModel" [(ngModel)]="passwordFormState.oldPassword.value" required pattern="{{regex.password}}" (change)="checkOldPassword()">
+                        <button mat-icon-button matSuffix type="button">
+                        <mat-icon>vpn_key</mat-icon>
+                    </button>
+                        <mat-error *ngIf="passwordFormState.oldPassword.value && (!oldPassword.valid ||
+                    !passwordFormState.oldPassword.valid)">
+                            {{passwordFormState.oldPassword.error}}
+                        </mat-error>
+                    </mat-form-field>
+                    <div *ngIf="isServerCheckingOldPass">
+                        <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+                        </mat-progress-bar>
+                    </div>
+
+                    <mat-form-field appearance="standard" class="form-width">
+                        <mat-label>New password</mat-label>
+                        <input matInput type="{{newPasswordView ? 'text':'password'}}" [(ngModel)]="passwordFormState.newPassword.value" name="newPassword" placeholder="**********" required pattern="{{regex.password}}" #newPassword="ngModel" (change)="validateNewPassword();onPasswordConfirm()">
+                        <button mat-icon-button matSuffix type="button">
+                        <mat-icon (click)="newPasswordView = !newPasswordView">
+                            {{newPasswordView ? 'visibility' : 'visibility_off'}}
+                        </mat-icon>
+                    </button>
+                        <mat-error *ngIf="passwordFormState.newPassword.value &&
+                    (!newPassword.valid || !isNewPassStrongEnough || !passwordFormState.newPassword.valid)">
+                            {{passwordFormState.newPassword.error}}
+                        </mat-error>
+                    </mat-form-field>
+                    <div *ngIf="isServerCheckingNewPass">
+                        <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+                        </mat-progress-bar>
+                    </div>
+
+                    <mat-form-field appearance="standard" class="form-width">
+                        <mat-label>Confirm password</mat-label>
+                        <input matInput type="{{confirmPasswordView ? 'text':'password'}}" [(ngModel)]="passwordFormState.newPasswordConfirm.value" name="newPasswordConfirm" required pattern="{{regex.password}}" (change)="onPasswordConfirm()" #passwordConf="ngModel" [ngClass]="{invalid:!passwordFormState.newPasswordConfirm.valid}">
+                        <button mat-icon-button matSuffix type="button">
+                        <mat-icon (click)="confirmPasswordView = !confirmPasswordView">
+                            {{confirmPasswordView ? 'visibility' : 'visibility_off'}}
+                        </mat-icon>
+                    </button>
+                        <mat-error *ngIf="passwordFormState.newPasswordConfirm.value &&
+                            (!passwordConf.valid || !passwordFormState.newPasswordConfirm.valid)">
+                            {{passwordFormState.newPasswordConfirm.error}}
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- <div *ngIf="isServerCheckingNewPass">
+                        <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+                        </mat-progress-bar>
+                    </div> -->
+
+                    <div>
+                        <button mat-raised-button color='primary' type="submit" [disabled]="!passwordForm.valid || isServerCheckingOldPass ||
+                                isServerCheckingNewPass || !checkedServerOldPass || !checkedServerNewPass ||
+                                !passwordFormState.oldPassword.valid || !passwordFormState.newPassword.valid ||
+                                !isNewPassStrongEnough || !passwordFormState.newPasswordConfirm.valid">
+                        Change
+                    </button>
+                    </div>
+
+                </form>
+
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <!-- <div class="big-section">
+        <h3>Account Recovery Options</h3>
+        <form (ngSubmit)="submitRecoveryOptions()" #form="ngForm">
+            <div class="section-group">
+                <label class="text-uppercase">phone number <i class="fa fa-phone"></i></label>
+                <input class="form-control" type="text" [(ngModel)]="formState.telephone" name="number" #number="ngModel" pattern="{{regex.number}}" placeholder="mobile number">
+                <div class="text-danger" *ngIf="formState.telephone && number.touched && !number.valid">
+                    {{errors.number}}
+                </div>
+            </div>
+            <div class="section-group">
+                <label class="text-uppercase">Email <i class="fa fa-envelope"></i></label>
+                <input class="form-control" type="email" name="email" email placeholder="recovery email" [(ngModel)]="formState.email" pattern="{{regex.email}}" #email="ngModel">
+                <div class="text-danger" *ngIf="formState.email && email.touched && !email.valid">
+                    {{errors.email}}
+                </div>
+            </div>
+            <div class="section-group clearfix">
+                <button type="submit" class="btn btn-primary pull-left next-btn" [disabled]="!form.valid">Save
+									</button>
+            </div>
+        </form>
+    </div>
+    <div class="big-section">
+        <h3>Change password</h3>
+        <form (ngSubmit)="submitChangePassword()" #passwordForm="ngForm">
+            <div class="section-group">
+                <label class="text-uppercase">Old Password <i class="fa fa-lock"></i></label>
+                <input class="form-control" type="password" name="oldPassword" [(ngModel)]="passwordFormState.oldPassword.value" placeholder="**********" required pattern="{{regex.password}}" #oldPassword="ngModel" (change)="checkOldPassword()">
+                <div *ngIf="isServerCheckingOldPass">
+                    Please wait. Checking old password ...
+                    <img class="loadingGif" src="assets/images/core/loading-6.gif" alt="checking password...">
+                </div>
+                <div class="text-danger" *ngIf="passwordFormState.oldPassword.value && (!oldPassword.valid ||
+											!passwordFormState.oldPassword.valid)">
+                    {{passwordFormState.oldPassword.error}}
+                </div>
+            </div>
+            <div class="section-group">
+                <label class="text-uppercase">New Password <i class="fa fa-lock"></i></label>
+                <div class="password-container">
+                    <input type="{{newPasswordView ? 'text':'password'}}" [(ngModel)]="passwordFormState.newPassword.value" name="newPassword" class="form-control" placeholder="**********" required pattern="{{regex.password}}" #newPassword="ngModel" (change)="validateNewPassword();onPasswordConfirm()">
+                    <a class="toggle-password" (click)="newPasswordView = !newPasswordView">
+                        <i class="fas" [ngClass]="{'fa-eye-slash':newPasswordView,
+																		'fa-eye':!newPasswordView}">
+											</i>
+                    </a>
+                </div>
+                <div *ngIf="isServerCheckingNewPass">
+                    Please wait. Checking new password ...
+                    <img class="loadingGif" src="assets/images/core/loading-6.gif" alt="checking password...">
+                </div>
+                <div class="text-danger" *ngIf="passwordFormState.newPassword.value &&
+										(!newPassword.valid || !isNewPassStrongEnough || !passwordFormState.newPassword.valid)">
+                    {{passwordFormState.newPassword.error}}
+                </div>
+            </div>
+            <div class="section-group">
+                <label class="text-uppercase">Confirm Password <i class="fa fa-lock"></i></label>
+                <div class="password-container">
+                    <input type="{{confirmPasswordView ? 'text':'password'}}" [(ngModel)]="passwordFormState.newPasswordConfirm.value" name="newPasswordConfirm" class="form-control" placeholder="*********" required pattern="{{regex.password}}" (change)="onPasswordConfirm()"
+                        #passwordConf="ngModel" [ngClass]="{invalid:!passwordFormState.newPasswordConfirm.valid}">
+                    <a class="toggle-password" (click)="confirmPasswordView = !confirmPasswordView">
+                        <i class="fas" [ngClass]="{'fa-eye-slash':confirmPasswordView,
+																		'fa-eye':!confirmPasswordView}">
+											</i>
+                    </a>
+                </div>
+                <div class="text-danger" *ngIf="passwordFormState.newPasswordConfirm.value &&
+												(!passwordConf.valid || !passwordFormState.newPasswordConfirm.valid)">
+                    {{passwordFormState.newPasswordConfirm.error}}
+                </div>
+            </div>
+            <div class="section-group clearfix">
+                <button type="submit" class="btn btn-primary pull-left next-btn" [disabled]="!passwordForm.valid || isServerCheckingOldPass ||
+											  		isServerCheckingNewPass || !checkedServerOldPass || !checkedServerNewPass ||
+											  		!passwordFormState.oldPassword.valid || !passwordFormState.newPassword.valid ||
+											  		!isNewPassStrongEnough || !passwordFormState.newPasswordConfirm.valid">
+										Change
+									</button>
+            </div>
+        </form>
+
+    </div> -->
+</div>
+<!-- /main-form-content -->

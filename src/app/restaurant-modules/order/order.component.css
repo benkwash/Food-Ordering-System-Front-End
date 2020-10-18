@@ -1,0 +1,51 @@
+.configure-card {
+    position: relative;
+    width: 90%;
+    /* max-width: 700px; */
+    margin: auto;
+}
+
+.title-head>h2 {
+    margin: auto;
+    width: 200px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.material-icons {
+    cursor: pointer;
+    padding: 0 14px;
+}
+
+.md-red {
+    color: #BF3F3F;
+}
+
+.material-icons.md-light {
+    color: #5D5959
+}
+
+.md-blue {
+    color: #2d42cc
+}
+
+.material-icons.md-turk {
+    color: #5feddd
+}
+
+.material-icons.md-green {
+    color: #4ff06a
+}
+
+table {
+    width: 100%;
+}
+
+@media(max-width:700px) {
+    .mobile-display-disable {
+        /* hide in mobile/smaller displays */
+        display: none !important;
+    }
+}

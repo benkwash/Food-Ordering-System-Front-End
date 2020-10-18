@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black|Bree+Serif|Lato|Libre+Franklin|Lora|Open+Sans|Scada|Roboto');
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* @import "~@fortawesome/fontawesome-free/css/all.css"; */
+
+
+/* @import '~ngx-ui-switch/ui-switch.component.css'; */
+
+
+/* @import "~@ng-select/ng-select/themes/default.theme.css"; */
+
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
+
+/*-- CUSTOM STYLES--*/
+
+@import "app-styles/generic-global-styles/app-styles.css";
+@import "app-styles/generic-global-styles/generic-modal-styles.css";
+body {
+    /* height: 100%; */
+    margin: 0;
+    /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+}
+
+
+/* * {
+    font-family: Roboto, "Helvetica Neue Light", " Helvetica Neue", Helvetica, Arial, "Lucida Grande", "sans-serif" !important;
+} */

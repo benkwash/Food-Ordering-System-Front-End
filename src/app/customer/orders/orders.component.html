@@ -1,0 +1,144 @@
+<div class="main-card">
+    <div class="title-head">
+        <h2>My Orders</h2>
+        <span class="example-spacer">
+        </span>
+        <span class="material-icons cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='active'}" (click)="selectedFilter='active';getOrders('active')" matTooltip="active orders" aria-label="Button that displays a tooltip when focused or hovered over">
+            list_alt
+        </span>
+        <span class="material-icons cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='delivered'}" (click)="selectedFilter='delivered';getOrders('delivered')" matTooltip="completed orders" aria-label="Button that displays a tooltip when focused or hovered over">
+            assignment_turned_in
+        </span>
+    </div>
+
+    <mat-card>
+        <table mat-table [dataSource]="allOrders" class="cursor-pointer">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="orderID">
+                <th mat-header-cell *matHeaderCellDef> Order ID </th>
+                <td mat-cell *matCellDef="let element" (click)=getOrderDetails(element)>#{{element.orderID}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element" (click)=getOrderDetails(element)> {{element.Date| date:'shortDate'}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="mode">
+                <th mat-header-cell *matHeaderCellDef class="mobile-display-disable"> Type </th>
+                <td mat-cell *matCellDef="let element" class="mobile-display-disable" (click)=getOrderDetails(element)>
+                    {{element.mode}}
+                </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let element" (click)=getOrderDetails(element)> {{element.total | currency:'GHS'}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element" (click)=getOrderDetails(element)> {{element.status}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="mobile-display-disable"> Action </th>
+
+                <td mat-cell *matCellDef="let element" class="mobile-display-disable">
+                    <button (click)=cancelOrder(element) *ngIf="element.action=='cancel'" mat-button color="warn">cancel order</button>
+                    <button (click)=confirmOrder(element) *ngIf="element.action=='confirm'" mat-button color="primary">confirm order</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="allOrdersColumn"></tr>
+            <tr mat-row *matRowDef="let row; columns: allOrdersColumn;"></tr>
+        </table>
+    </mat-card>
+
+
+    <!-- <div class="all-deliveries">
+        <mat-card class="delivery-card " *ngFor="let order of allOrders,let i=index">
+           
+            <mat-card-subtitle>Order ID:{{order.orderID}}</mat-card-subtitle>
+            <mat-card-content>
+                <div class="info-tab">
+                    <div class="info-left">
+                        <p>Orders</p>
+                    </div>
+                    <div class="info-right ">
+                        <div *ngFor="let oneOrder of order.orders, let j=index">
+                            <p class="orders-list">name: {{oneOrder.name}} <br>quantity: {{oneOrder.quantity}}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="info-tab">
+                    <div class="info-left">
+                        <p>Cost</p>
+                    </div>
+                    <div class="info-right">
+                        <p>Gh:{{order.total}}</p>
+                    </div>
+                </div>
+
+
+                <div class="info-tab actions-container">
+                    <div class="info-left">
+                        <p></p>
+                    </div>
+                    <div class="info-right">
+                        <button class="actions-btn" mat-raised-button color="warn" (click)=cancelDelivery(i) *ngIf=" !order.processing && !order.cancelled.cancelled">
+                            cancel order
+                        </button>
+                        <mat-chip-list class="actions-btn" mat-raised-button *ngIf="order.cancelled.cancelled && order.cancelled.by=='customer'">
+                            <mat-chip color="warn" selected>
+                                order cancelled by you
+                            </mat-chip>
+                        </mat-chip-list>
+                        <mat-chip-list class="actions-btn" mat-raised-button *ngIf="order.cancelled.cancelled && order.cancelled.by!='customer'">
+                            <mat-chip color="warn" selected>
+                                order cancelled by restaurant
+                            </mat-chip>
+                        </mat-chip-list>
+                        <mat-chip-list class="actions-btn" mat-raised-button *ngIf="order.completed.completed && order.customerConfirmation">
+                            <mat-chip color="primary" selected>
+                                <span *ngIf="order.mode=='delivery'">delivered</span>
+                                <span *ngIf="order.mode=='pickup'">picked up</span>
+                                <span *ngIf="order.mode=='table'">completed</span>
+                            </mat-chip>
+                        </mat-chip-list>
+
+                        <button class="actions-btn" mat-raised-button color="primary" (click)=confirmDelivery(i) *ngIf="order.completed.completed && !order.customerConfirmation">
+                            <span *ngIf="order.mode=='delivery'">confirm delivery</span>
+                            <span *ngIf="order.mode=='pickup'">confirm pickup</span>
+                            <span *ngIf="order.mode=='table'">confirm reservation</span>
+                        </button>
+
+                        <mat-chip-list class="actions-btn" *ngIf="order.deliveryPerson.deliveryPerson && order.processing && !order.completed.completed">
+                            <mat-chip color="primary" selected>
+                                Order is in transit
+                            </mat-chip>
+                        </mat-chip-list>
+
+                        <mat-chip-list class="actions-btn" *ngIf="order.deliveryPerson.deliveryPerson==null && order.processing && !order.completed.completed">
+                            <mat-chip color="primary" selected>Order is being processed</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <div *ngIf="allOrders.length==0">
+            <h3>No orders</h3>
+        </div>
+    </div> -->
+</div>

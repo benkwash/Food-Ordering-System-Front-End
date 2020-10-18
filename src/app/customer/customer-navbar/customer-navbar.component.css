@@ -1,0 +1,14 @@
+.pop-signup {
+    display: block;
+}
+
+.close-signup {
+    display: none;
+}
+
+.signup {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 9;
+}

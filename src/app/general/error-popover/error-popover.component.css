@@ -1,0 +1,14 @@
+:host >>> .popover-title {
+    padding: 5px 14px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #a75757;
+}
+
+:host >>> .popover-content {
+    padding: 4px 14px;
+}
+
+:host >>> .popover {
+    border: none;
+}

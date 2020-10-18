@@ -1,0 +1,84 @@
+<div class="main-card">
+    <div class="title-head pd-10">
+        <h3>Restuarant Deliveries</h3>
+        <span class="example-spacer">
+
+        </span>
+        <span class="material-icons md-light cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='active'}" (click)="selectedFilter='active';getDeliveryInfo('active')" matTooltip="all active deliveries">
+            local_shipping
+        </span>
+        <span class="material-icons md-light cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='waiting'}" (click)="selectedFilter='waiting';getDeliveryInfo('waiting')" matTooltip="deliveries awaiting confirmation">
+            hourglass_top
+        </span>
+        <span class="material-icons md-light cursor-pointer" [ngClass]="{'md-blue': selectedFilter=='delivered'}" (click)="selectedFilter='delivered';getDeliveryInfo('delivered')" matTooltip="confirmed deliveries">
+            assignment_turned_in
+        </span>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="all-deliveries">
+        <mat-card class="delivery-card " *ngFor="let delivery of allDeliveries,let i=index">
+            <!-- <mat-card-header> -->
+            <!-- <mat-card-title>Order ID:{{delivery.orderID}}</mat-card-title> -->
+            <mat-card-subtitle>Order ID:{{delivery.orderID}}</mat-card-subtitle>
+            <!-- </mat-card-header> -->
+            <mat-card-content>
+                <div class="info-tab">
+                    <div class="info-left">
+                        <p>Customer</p>
+                    </div>
+                    <div class="info-right">
+                        <p>{{delivery.customerName}}</p>
+                    </div>
+                </div>
+                <div class="info-tab">
+                    <div class="info-left">
+                        <p>Address</p>
+                    </div>
+                    <div class="info-right">
+                        <p>{{delivery.deliveryLocation.address}}</p>
+                    </div>
+                </div>
+                <div class="info-tab">
+                    <div class="info-left">
+                        <p>Contact</p>
+                    </div>
+                    <div class="info-right">
+                        <a href="tel:{{delivery.deliveryLocation.number}}">{{delivery.deliveryLocation.number}}</a>
+                        <!-- <p>{{delivery.deliveryLocation.number}}</p> -->
+                    </div>
+                </div>
+
+                <div class="info-tab" *ngIf="accountType=='admin' && delivery.deliveryPerson.accountType=='staff' ">
+                    <div class="info-left">
+                        <p>assigned to</p>
+                    </div>
+                    <div class="info-right">
+                        <p>{{delivery.deliveryPersonName}}</p>
+                    </div>
+                </div>
+                <div class="info-tab">
+                    <div class="info-left">
+                        <p></p>
+                    </div>
+                    <div class="info-right">
+                        <button class="right-btn" mat-raised-button *ngIf="accountType=='staff' && !delivery.completed.completed" (click)=confirmDelivery(i)>
+                            confirm delivery
+                        </button>
+                        <button class="right-btn" mat-raised-button *ngIf="accountType=='admin' && delivery.deliveryPerson.accountType=='admin' && !delivery.completed.completed" (click)=confirmDelivery(i)>
+                            confirm delivery
+                        </button>
+                        <h3 *ngIf="accountType=='admin' && delivery.deliveryPerson.accountType=='staff' && !delivery.completed.completed">not delivered</h3>
+                        <p *ngIf="delivery.completed.completed && !delivery.customerConfirmation">delivered(not confirmed)</p>
+                        <h3 *ngIf="delivery.completed.completed && delivery.customerConfirmation">delivery confirmed</h3>
+                    </div>
+                </div>
+            </mat-card-content>
+            <!-- <mat-card-footer class="card-footer">
+                </mat-card-footer> -->
+        </mat-card>
+    </div>
+
+</div>
+
+<!-- <p *ngIf="!delivery.completed && !delivery.processing">cancel order</p> -->
+<!-- <p *ngIf="!delivery.completed && delivery.processing ">pending confirmation</p> -->

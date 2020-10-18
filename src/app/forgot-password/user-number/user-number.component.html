@@ -1,0 +1,74 @@
+<div class="main-card">
+    <div class="sub-card">
+        <mat-card>
+            <h2 class="text-center">Account Recovery - Code Verification</h2>
+
+            <div *ngIf="!recoveryCodeInputDisplay">
+                <h2 class="text-center"><small>Send a recovery code to this number:</small></h2>
+                <h1 class="text-center"><small><strong>{{recoveryNumber}}</strong></small></h1>
+                <div>
+                    <div>
+                        <button type="button" mat-raised-button color=primary (click)="sendRecoveryCodeNumber()">
+                          Send code
+                        </button>
+                    </div>
+                    <div class="pull-left">
+                        <button type="button" mat-button color=warn (click)="getPreviousRecoveryOption()">
+                          back
+                        </button>
+                        <button type="button" mat-button color=accent (click)="getNextRecoveryOption()">
+                          try a different option
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="recoveryCodeInputDisplay">
+                <h3 class="text-center">
+                    <small>A recovery code has been sent to <strong>{{recoveryNumber}}</strong></small>
+                </h3>
+                <br>
+                <h3 class="text-center">
+                    <small>
+                      Didn't receive the code? <a (click)="sendRecoveryCodeNumber()">Click here</a> to resend code.
+                    </small>
+                </h3>
+                <form (ngSubmit)="submitNumberRecoveryCode()" #codeForm="ngForm">
+                    <h2 class="text-center"><small>Enter code below to continue</small></h2>
+
+                    <mat-form-field appearance="standard" class="form-width">
+                        <mat-label>recovery code</mat-label>
+                        <input matInput type="text" [(ngModel)]="recoveryCode" required name="recoveryCode">
+                        <button mat-icon-button matSuffix type="button">
+                          <mat-icon>text_format</mat-icon>
+                      </button>
+                        <mat-error *ngIf="recoveryCodeSent && !recoveryCodeValid">
+                            {{recoveryCodeError}}
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- <div class="section-group">
+                        <label>Enter code below to continue:<strong></strong></label>
+                        <input class="form-control" type="text" [(ngModel)]="recoveryCode" required name="recoveryCode" placeholder="recovery code">
+                        <span class="text-danger" *ngIf="recoveryCodeSent && !recoveryCodeValid">
+                    {{recoveryCodeError}}
+                  </span>
+                    </div> -->
+                    <div>
+                        <div>
+                            <button type="submit" mat-raised-button color=primary [disabled]="!codeForm.valid">Submit</button>
+                        </div>
+                        <div class="pull-left">
+                            <button type="button" mat-button color=warn (click)="getPreviousRecoveryOption()">
+                              back
+                            </button>
+                            <button type="button" mat-button color=accent (click)="getNextRecoveryOption()">
+                              try a different option
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </mat-card>
+
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<div *ngIf="dialogType=='createAcc'">
+    <h1 mat-dialog-title>create an account for {{staffName}}</h1>
+    <div mat-dialog-content>
+        <div class="create-account">
+            <form #createStaffAccountForm=ngForm (submit)=createStaffAccount()>
+                <div class="form-group">
+                    <mat-form-field class="form-width" appearance="standard">
+                        <mat-label>username</mat-label>
+                        <input matInput [(ngModel)]="newAccountUsername.username" required name="username" #name="ngModel" (change)="checkUsername()">
+                        <mat-error *ngIf="!name.valid">
+                            {{usernameError}}
+                        </mat-error>
+                    </mat-form-field>
+                    <div *ngIf="isCheckingUsername">
+                        <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+                        </mat-progress-bar>
+                    </div>
+                </div>
+
+                <div class="form-group account-permissions">
+                    <h3>Account permissions</h3>
+
+                    <mat-slide-toggle color="primary" [checked]="newAccountUsername.permissions.staff" [(ngModel)]="newAccountUsername.permissions.staff" value="true" name="estaff" #name="ngModel" matTooltip="add,update and delete other staff">
+                        manage other staff
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="newAccountUsername.permissions.menu" [(ngModel)]="newAccountUsername.permissions.menu" value="true" name="emenu" #name="ngModel" matTooltip="add,update and delete restaurant menu">
+                        manage restaurant menu
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="newAccountUsername.permissions.accounts" [(ngModel)]="newAccountUsername.permissions.accounts" value="true" name="eaccounts" #name="ngModel">
+                        manage finaces
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="newAccountUsername.permissions.orders" [(ngModel)]="newAccountUsername.permissions.orders" value="true" name="eorders" #name="ngModel" matTooltip="process orders and assign to deliery persons">
+                        manage orders
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="newAccountUsername.permissions.delivery" [(ngModel)]="newAccountUsername.permissions.delivery" value="true" name="edelivery" #name="ngModel" matTooltip="take up and delivery orders">
+                        do deliveries
+                    </mat-slide-toggle>
+
+
+                </div>
+            </form>
+
+
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="createStaffAccount()" [disabled]="!createStaffAccountForm.valid" cdkFocusInitial>Create account</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType=='newAccInfo'">
+    <h1 mat-dialog-title>account information for {{staffName}}</h1>
+    <div mat-dialog-content>
+        <h4>username: {{newAccountUsername.username}}</h4>
+        <h4>password: {{newAccountPassword}}</h4>
+        <p>
+            It is recommended {{newAccountUsername.username}} immediately logs into thier account and change their password.
+        </p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" (click)="onNoClick()">close</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType=='showPass'">
+    <h1 mat-dialog-title>new password</h1>
+    <div mat-dialog-content>
+        <h4>{{resetPass}}</h4>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" (click)="onNoClick()">close</button>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<mat-toolbar color="primary" class="nav-bar">
+    <span class="material-icons cursor-pointer menu-icon" (click)="sidebarToggle()">
+        menu
+    </span>
+    <h4 [routerLink]="['/restaurant/admin/home']" class="product-name curser-pointer">
+        {{productName}}
+        <img class="res-logo" src="../../../assets/images/ben-comecho-logo.png" alt="">
+    </h4>
+    <span class="example-spacer"></span>
+
+    <!-- 
+    <button mat-button class="right-tools" [routerLink]="['/restaurant/admin/home']">
+        <mat-icon>home</mat-icon> 
+        home
+    </button> -->
+
+    <button mat-button class="right-tools" [matMenuTriggerFor]="resManage">
+        <mat-icon>toc</mat-icon>
+        <span class="hide-menu-text">
+            manage
+        </span>
+    </button>
+    <mat-menu #resManage="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="/restaurant/admin/manage/menu">
+            <mat-icon>restaurant</mat-icon> 
+            menu
+        </button>
+        <button mat-menu-item routerLink="/restaurant/admin/manage/staff">
+            <mat-icon>person_outline</mat-icon> 
+            staff
+        </button>
+        <button mat-menu-item routerLink="/restaurant/admin/manage/orders">
+            <mat-icon>list_alt</mat-icon> 
+            orders
+        </button>
+        <button mat-menu-item routerLink="/restaurant/admin/manage/delivery">
+            <mat-icon>local_shipping</mat-icon> 
+            deliveries
+        </button>
+        <button mat-menu-item [routerLink]="['/restaurant/admin/manage/rating']">
+            <mat-icon>star_half</mat-icon> 
+            rating and reviews
+        </button>
+        <button mat-menu-item [routerLink]="['/restaurant/admin/manage/accounts']">
+            <mat-icon>account_balance_wallet</mat-icon> 
+            accounts and revenue
+        </button>
+    </mat-menu>
+
+    <span class="material-icons right-tools curser-pointer" [matMenuTriggerFor]="beforeMenu"> account_circle </span>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item [routerLink]="['/restaurant/admin/account']">
+            <mat-icon>admin_panel_settings</mat-icon>
+            restaurant account
+        </button>
+        <button mat-menu-item [routerLink]="['//restaurant/admin/configuration']">
+            <mat-icon>settings</mat-icon>    
+            configure
+        </button>
+        <button mat-menu-item [routerLink]="['/logout']">
+        <mat-icon>login</mat-icon>
+        logout
+        </button>
+    </mat-menu>
+</mat-toolbar>

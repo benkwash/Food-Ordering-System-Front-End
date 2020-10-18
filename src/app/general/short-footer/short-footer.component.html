@@ -1,0 +1,14 @@
+<div [ngClass]="{'hidden-print':disableDuringPrint}">
+    <footer id="footer">
+        <div id="copyRight">
+            &copy; 2020 {{companyName | titlecase}}
+            <span class="hidden-print">
+       | <a routerLink="/about">About</a> | <a routerLink="/contact">Contact Us</a> |
+        <a (click)="openTermsConditions()">Terms</a>
+      </span>
+        </div>
+    </footer>
+</div>
+<!-- <app-terms-conditions *ngIf="showTermsConditions" [enforceAgreement]="false"
+                      (acceptStatus)="closeTermsConditions($event)">
+</app-terms-conditions> -->

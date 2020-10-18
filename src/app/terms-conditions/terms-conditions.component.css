@@ -1,0 +1,80 @@
+#terms {
+    width: 450px;
+    padding: 8px 15px;
+    height: 500px;
+}
+
+@media (max-width: 450px) {
+    #terms {
+        width: 100%;
+    }
+}
+
+#top-header {
+    height: 8%;
+}
+
+#btn-section {
+    height: 10%;
+}
+
+#terms-condition-content {
+    height: 80%;
+}
+
+
+/*-- top-header styles */
+
+#top-header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+/*-- button-section styles --*/
+
+#btn-section {
+    padding: 7px 20px;
+}
+
+#btn-section .accept-btn,
+#btn-section .accept-btn:hover,
+#btn-section .accept-btn:active,
+#btn-section .accept-btn:focus {
+    background-color: #2a9fc1;
+    border-color: #269abc;
+}
+
+
+/*-- terms and condition content styles --*/
+
+#terms-condition-content {
+    overflow-y: auto;
+    padding: 2px 5px 15px 5px;
+}
+
+#terms-condition-content .small-header {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+#terms-condition-content .section-area {
+    margin-bottom: 15px;
+}
+
+#terms-condition-content .small-section-area {
+    margin-bottom: 8px;
+}
+
+
+/*-- custom scroll-element styles --*/
+
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #61a9bd;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: #c6e9f3;
+}

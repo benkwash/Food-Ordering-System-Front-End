@@ -1,0 +1,62 @@
+alert {
+	position: fixed;
+	top: 35px;
+	right: 0;
+	left: 0;
+	z-index: 1050;
+}
+:host >>> .alert-dismissable .close, :host >>> .alert-dismissible .close {
+	opacity: .75;
+}
+:host >>> .alert-danger,
+:host >>> .alert-success,
+:host >>> .alert-warning {
+	width: 55%;
+	margin: auto;
+}
+
+/*-- this is a naive way of doing things for now---*/
+@media (max-width: 520px) {
+	:host >>> .alert-danger,
+	:host >>> .alert-success, :host >>> .alert-warning {
+		width: 90%;
+	}
+}
+
+@media (min-width: 520px) and (max-width: 750px) {
+	:host >>> .alert-danger, :host >>> .alert-success,
+	:host >>> .alert-warning {
+		width: 70%;
+	}
+}
+
+@media (min-width: 750px) and (max-width: 940px) {
+	:host >>> .alert-danger, :host >>> .alert-success,
+	:host >>> .alert-warning {
+		width: 55%;
+	}
+}
+
+@media (min-width: 940px) and (max-width: 992px) {
+	:host >>> .alert-danger, :host >>> .alert-success,
+	:host >>> .alert-warning {
+		width: 42%;
+	}
+}
+
+@media (min-width: 992px) {
+	:host >>> .alert-danger, :host >>> .alert-success,
+	:host >>> .alert-warning {
+		width: 39%;
+	}
+}
+
+/*-- print styles --*/
+@media print {
+	alert {
+		display: none !important;
+	}
+}
+/*520px; 90%*/
+/*750px: 70%*/
+/*942px:55%*/

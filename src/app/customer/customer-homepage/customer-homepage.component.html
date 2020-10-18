@@ -1,0 +1,47 @@
+<div class="main-home-page">
+
+
+    <div class="main-page-contents">
+
+        <form (ngSubmit)="onSearch()" #form="ngForm">
+            <div class="search-bar">
+                <div class="homepage-descrption">
+                    <h1>heyoo, you dey HUNG&#63; </h1>
+                    <h3>order a cho&#33;&#33;</h3>
+                </div>
+                <div class="info-tab">
+                    <div class="info-left search-input">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>select your region</mat-label>
+                            <mat-select required name="sregion" [(ngModel)]="formState.region">
+                                <mat-option *ngFor="let region of regions" [value]="region">
+                                    {{region}}
+                                </mat-option>
+                                <mat-icon>location_on</mat-icon>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="info-right search-input">
+                        <mat-form-field appearance="outline">
+                            <mat-label>make we know your city</mat-label>
+                            <input matInput required [(ngModel)]="formState.city" name="city" #city="ngModel">
+                            <mat-icon matSuffix class="cursor-pointer" color="primary" (click)="onSearch()">search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+
+
+
+<!-- https://www.freepik.com/free-photos-vectors/background -->

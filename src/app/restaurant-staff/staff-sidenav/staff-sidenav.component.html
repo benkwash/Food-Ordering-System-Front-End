@@ -1,0 +1,40 @@
+<mat-nav-list>
+    <div class="profile-card">
+        <div class="header">
+            <h2>{{resName}}</h2>
+            <!-- <h4>Reestaurant description</h4> -->
+        </div>
+
+        <span *ngIf="!resPicture" class="material-icons res-picture">
+            storefront
+        </span>
+        <img *ngIf="resPicture" src="{{logoAssestDir}}/{{resPicture}}" alt="">
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h4 MatSubheader class="subheader">Manage</h4>
+
+    <a mat-list-item routerLink="/restaurant/staff/home" (click)=sidebarToggle()>
+        <mat-icon>home</mat-icon> Home
+    </a>
+    <a mat-list-item routerLink="/restaurant/staff/manage/menu" *ngIf="permissions.menu" (click)=sidebarToggle()>
+        <mat-icon>restaurant</mat-icon> Menu
+    </a>
+    <a mat-list-item routerLink="/restaurant/staff/manage/staff" *ngIf="permissions.staff" (click)=sidebarToggle()>
+        <mat-icon>person_outline</mat-icon>Staff
+    </a>
+    <a mat-list-item routerLink="/restaurant/staff/manage/orders" *ngIf="permissions.orders" (click)=sidebarToggle()>
+        <mat-icon>list_alt</mat-icon>Orders
+    </a>
+    <a mat-list-item routerLink="/restaurant/staff/manage/delivery" *ngIf="permissions.delivery" (click)=sidebarToggle()>
+        <mat-icon>local_shipping</mat-icon>Deliveries
+    </a>
+    <a mat-list-item routerLink="/restaurant/staff/manage/rating" *ngIf="permissions.rating" (click)=sidebarToggle()>
+        <mat-icon>star_half</mat-icon>Rating and reviews
+    </a>
+    <a mat-list-item routerLink="/restaurant/staff/manage/accounts" *ngIf="permissions.accounts" (click)=sidebarToggle()>
+        <mat-icon>account_balance_wallet</mat-icon>Accounts and revenue
+    </a>
+
+</mat-nav-list>

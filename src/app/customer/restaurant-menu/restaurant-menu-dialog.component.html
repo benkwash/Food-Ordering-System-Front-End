@@ -1,0 +1,68 @@
+<div *ngIf="dialogType=='menu'">
+    <h1 mat-dialog-title>{{selectedMenu.name}}</h1>
+    <div mat-dialog-content>
+        <div class="selected-menu">
+            <div class="selected-menu-ingredients">
+                <div *ngFor="let ing of selectedMenu.ingredients,let i=index">
+                    <div class="info-tab">
+                        <span class="info-left">{{ing.name}}<span *ngIf="ing.canBeIncreased"> ({{ing.pricePerIncrement | currency:'GHS'}})</span></span>
+                        <div *ngIf="ing.canBeIncreased" class="info-right">
+                            <!-- <span class="example-spacer"></span> -->
+                            <span class="material-icons cursor-pointer right-tools" (click)="ingredientNumber('decrease',i)">
+                                remove_circle_outline 
+                            </span><span class="right-tools">{{ing.quantity}}</span>
+                            <span class="material-icons cursor-pointer right-tools" (click)="ingredientNumber('increase',i)">
+                                add_circle_outline
+                            </span>
+                            <!-- <button type="button" (click)="ingredientNumber('decrease',i)">decrease</button> {{ing.quantity}}
+                            <button type="button" (click)="ingredientNumber('increase',i)">increase</button> -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="selected-menu-options" *ngIf="selectedMenu.options.length!=0">
+                <mat-divider></mat-divider>
+                <p>Options</p>
+                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
+                    <mat-radio-button class="radio-button" *ngFor="let opt of selectedMenu.options,let i=index" [value]="opt" (click)="selectedOption(i)">
+                        {{opt.name}} ({{opt.price | currency:'GHS'}})
+                    </mat-radio-button><br>
+                </mat-radio-group>
+                <!-- <div *ngFor="let opt of selectedMenu.options,let i=index">
+                    <div>
+                        <span>
+                            <input type="radio" name="smoptions" [value]="opt" (click)="selectedOption(i)">
+                                        {{opt.name}}, Gh{{opt.price}}
+                        </span>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="order-inc-dec">
+                <div class="order-cost">
+                    <p>({{selectedMenu.price | currency:'GHS'}})</p>
+                </div>
+                <!-- <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon">
+                    <span class="material-icons cursor-pointer" (click)="changeOrderQty('decrease')">
+                        remove
+                    </span>
+                </button> -->
+                <span class="material-icons cursor-pointer" (click)="changeOrderQty('decrease')">
+                    remove_circle_outline
+                </span>{{selectedMenu.qty}}
+                <span class="material-icons cursor-pointer" (click)="changeOrderQty('increase')">
+                    add_circle_outline
+                </span>
+                <!-- <button type="button" (click)="changeOrderQty('decrease')">decrease</button> {{selectedMenu.qty}}
+                <button type="button" (click)="changeOrderQty('increase')">increase</button> -->
+            </div>
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="addToCart()" cdkFocusInitial>add to cart</button>
+    </div>
+</div>

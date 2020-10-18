@@ -1,0 +1,35 @@
+/* --- any styles for modals(causing problems) ---- */
+
+.modal-body .alert {
+    padding: 10px;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.modal-body.subject-config-mod .ng-select .ng-placeholder {
+    padding-left: 8px;
+    padding-top: 5px;
+}
+
+.my-modal-content {
+    margin-top: 75px;
+}
+
+.my-modal-content .modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid transparent;
+}
+
+.my-modal-content .close {
+    font-size: 31px;
+}
+
+.my-modal-content .modal-body {
+    padding: 0px 35px;
+    padding-bottom: 15px;
+}
+
+.my-modal-content .modal-footer {
+    padding: 0px 35px 15px 0;
+    border-top: 1px solid transparent;
+}

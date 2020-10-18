@@ -1,0 +1,23 @@
+<ng-template #modalTemplate>
+  <!--<div class="modal-body text-center">-->
+    <!--<p>{{modalContent}} <br> {{modalConfirm}} </p>-->
+    <!--<button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>-->
+    <!--<button type="button" class="btn btn-primary" (click)="decline()" >No</button>-->
+  <!--</div>-->
+
+  <div class="modal-body">
+    <p>{{modalContent}}</p>
+  </div>
+  <div class="modal-footer">
+    <div class="content">
+      <ng-container *ngIf="useAsAlertBox">
+        <button type="button" class="btn btn-default" (click)="decline()">Close</button>
+      </ng-container>
+      <ng-container *ngIf="!useAsAlertBox">
+        <span>{{modalConfirm}} </span>
+        <button type="button" class="btn btn-default" (click)="decline()" >No</button>
+        <button type="button" class="btn btn-danger" (click)="confirm()" >Yes</button>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

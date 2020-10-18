@@ -1,0 +1,175 @@
+<div mat-dialog-title class="head-top">
+    <h3>
+        {{orderDetail.customerName}}
+    </h3>
+    <span class="example-spacer"></span>
+
+    <span class="material-icons md-blue" *ngIf="filterMode=='active' && orderDetail.mode=='table' && orderDetail.processing" (click)=confirmReservation() matTooltip="confirm seat reservation">
+        deck
+    </span>
+    <span class="material-icons md-blue" *ngIf="filterMode=='active' && orderDetail.mode=='pickup' && orderDetail.processing" (click)=confirmPickup() matTooltip="customer pickup">
+        directions_walk
+    </span>
+    <span class="material-icons md-blue" *ngIf="filterMode=='active' && orderDetail.mode=='delivery' && orderDetail.processing" (click)=getDeliveryStaff() matTooltip="assign to delivery person">
+        local_shipping
+    </span>
+    <span class="material-icons md-blue" *ngIf="filterMode=='active' && !orderDetail.processing" (click)=processOrder() matTooltip="process order">
+        redeem
+    </span>
+    <span class="material-icons md-red" *ngIf="filterMode=='active' && !orderDetail.processing" (click)=cancelOrderDialog() matTooltip="cancel order">
+        remove_shopping_cart
+    </span>
+    <span class="material-icons" (click)=onNoClick() matTooltip="close">
+        close
+    </span>
+
+</div>
+<div mat-dialog-content>
+    <div class="selected-menu">
+
+        <div class="selected-menu-info">
+
+            <div class="order-detail" *ngIf="orderDetail!=null">
+                <div *ngFor="let order of orderDetail.orders">
+                    <div class="orders pd-10 mg-10">
+                        <h2>{{order.name}}</h2>
+                        <div *ngFor="let ingredient of order.ingredients">
+                            <div class="info-tab">
+                                <div class="info-left">
+                                    <h4>{{ingredient.name}}</h4>
+                                </div>
+                                <div class="info-right">
+                                    <p>{{ingredient.quantity}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-tab" *ngIf="order.selectedOption">
+                            <div class="info-left">
+                                <h4>Selected Option</h4>
+                            </div>
+                            <div class="info-right">
+                                <p>{{order.selectedOption}}</p>
+                            </div>
+                        </div>
+                        <div class="info-tab">
+                            <div class="info-left">
+                                <h4>Order quantity</h4>
+                            </div>
+                            <div class="info-right order-qty">
+                                <p> {{order.quantity}}</p>
+                            </div>
+                        </div>
+                        <div class="info-tab">
+                            <div class="info-left">
+                                <h4>Order cost</h4>
+                            </div>
+                            <div class="info-right order-price">
+                                <p>Gh{{order.price}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="cart-details pd-10">
+                    <div class="info-tab">
+                        <div class="info-left">
+                            <h4>Order mode</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.mode}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='pickup'">
+                        <div class="info-left">
+                            <h4>Pickup time</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.pickup | date:'shortTime'}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='delivery'">
+                        <div class="info-left">
+                            <h4>Delivery location</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.deliveryLocation.address}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='delivery'">
+                        <div class="info-left">
+                            <h4>Delivery Number</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.deliveryLocation.number}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='table'">
+                        <div class="info-left">
+                            <h4>Reservation time</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.table.time | date:'shortTime'}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='table'">
+                        <div class="info-left">
+                            <h4>Reserved tables</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.table.tables}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='table'">
+                        <div class="info-left">
+                            <h4>Reserved chairs</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.table.chairs}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab">
+                        <div class="info-left">
+                            <h4>subtotal</h4>
+                        </div>
+                        <div class="info-right order-price">
+                            <h3>{{orderDetail.subtotal | currency:'GHS'}}</h3>
+                        </div>
+                    </div>
+                    <div class="info-tab">
+                        <div class="info-left">
+                            <h4>total</h4>
+                        </div>
+                        <div class="info-right order-price">
+                            <h3>{{orderDetail.total | currency:'GHS'}}</h3>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="cart-details pd-10">
+                    <h2>Order mode: {{orderDetail.mode}}</h2>
+                    <div class="order-pickup" *ngIf="orderDetail.mode=='pickup'">
+                        <h3>Pickup time: {{orderDetail.pickup | date:'shortTime'}}</h3>
+                    </div>
+                    <div class="order-table" *ngIf="orderDetail.mode=='table'">
+                        <h3>Reservation time: {{orderDetail.table.time | date:'shortTime'}}</h3>
+                        <h3>Number of tables: {{orderDetail.table.tables}}</h3>
+                        <h3>Number of chairs: {{orderDetail.table.chairs}}</h3>
+
+                    </div>
+                    <div class="other-cart-details">
+                        <h2>subtotal: Gh{{orderDetail.subtotal}}</h2>
+                        <h2>total: Gh{{orderDetail.total}}</h2>
+                        <div class="delivery-location" *ngIf="orderDetail.mode=='delivery'">
+                            <p>Delivery location: {{orderDetail.deliveryLocation.address}}</p>
+                            <p>Customer contact: {{orderDetail.deliveryLocation.number}}</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div mat-dialog-actions>
+
+</div> -->

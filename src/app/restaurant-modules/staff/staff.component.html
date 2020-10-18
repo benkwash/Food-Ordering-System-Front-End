@@ -1,0 +1,40 @@
+<div class="configure-card">
+
+    <div class="all-menu">
+        <div class="menu-list-top pd-10">
+            <h3>All restaurant staff</h3>
+            <span class="example-spacer"></span>
+            <!-- add new menu icon -->
+            <span class="material-icons md-light" (click)="openNewStaffDialog()" matTooltip="add a new staff" aria-label="Button that displays a tooltip when focused or hovered over">
+                playlist_add
+            </span>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="scroll-menu">
+
+            <div *ngIf="allStaffInfo.length!=0">
+                <mat-list>
+                    <mat-list-item *ngFor="let staff of allStaffInfo; let i=index; last as last" [ngClass]="{'menu': true, 'menu-clicked': staff.clickActive}" (click)="showStaffDetails(staff._id)">
+                        <mat-icon mat-list-icon *ngIf="!staff.picture" class="md-light">person</mat-icon>
+                        <img mat-list-icon *ngIf="staff.picture" src="{{logoAssestDir}}/{{staff.picture}}">
+                        <h4 mat-line>{{staff.fName}} {{staff.lName}}</h4>
+                        <p mat-line>{{staff.title}}</p>
+                        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="allStaffInfo.length==0" class="no-menu">
+        <img src="../../../assets/images/no-staff.png" alt="">
+        <h3>No staff</h3>
+        <span class="material-icons md-light" (click)="openNewStaffDialog()" matTooltip="add staff">
+                playlist_add
+        </span>
+    </div>
+</div>
+
+<app-add-button (click)=openNewStaffDialog()>
+
+</app-add-button>

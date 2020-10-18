@@ -1,0 +1,68 @@
+<div *ngIf="dialogType=='cancelOrder'" class="dialog-container">
+    <h1 mat-dialog-title>Confirm order cancellation</h1>
+    <div mat-dialog-content>
+            <div class="form">
+                <form #addmenu=ngForm (submit)=cancelOrder()>
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label>Reason for order cancellation</mat-label>
+                            <textarea rows="4" matInput name="reason" [(ngModel)]=cancelReason #name=ngModel></textarea>
+                        </mat-form-field>
+                        
+                    </div>
+                </form>
+            </div>
+    </div>
+
+    <div mat-dialog-actions class="action-buttons">
+        <button mat-raised-button color="primary" (click)="onNoClick()">cancel</button>
+        <button mat-raised-button color="warn" (click)="cancelOrder()" >Cancel Order</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType=='assignDelivery'" class="dialog-container">
+    <h1 mat-dialog-title>Select a delivery person</h1>
+    <div mat-dialog-content>
+
+        <div *ngIf="deliveryPersons.length!=0">
+            <mat-radio-group class="persons-radio-group"  name="deliveryp" [(ngModel)]=deliveryPerson  #name=ngModel>
+                <mat-radio-button class="persons-radio" *ngFor="let person of deliveryPersons" [value]=person>
+                    {{person.fName}} {{person.lName}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        
+        <!-- <div *ngIf="deliveryPersons.length!=0">
+            <div *ngFor="let person of deliveryPersons,let i=index">
+                <div (click)="assignDelivery(i)">
+                    <p>{{person.fName}} {{person.lName}}</p>
+                </div>
+            </div>
+        </div> -->
+        <div class="deliver-myself">
+            <span><a (click)="deliverMyself()">Deliver order myself instead</a></span>
+        </div>
+    </div>
+    <div mat-dialog-actions class="action-buttons">
+        <button mat-raised-button color="warn" (click)="onNoClick()">cancel</button>
+        <button mat-raised-button color="primary" (click)="assignDelivery()" > Assign</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType=='confirmPickup'">
+    <h1 mat-dialog-title>Confirm pickup</h1>
+
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" (click)="onNoClick()">cancel</button>
+        <button mat-raised-button color="primary" (click)="confirm()" > confirm</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType=='confirmReservation'">
+    <h1 mat-dialog-title>Confirm reservation</h1>
+
+    <div mat-dialog-actions >
+        <button mat-raised-button color="warn" (click)="onNoClick()">cancel</button>
+        <button mat-raised-button color="primary" (click)="confirm()" > confirm</button>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+<div class="body-main">
+    <div class="main-content">
+
+        <div class="restaurant-info">
+            <img *ngIf="!restaurantPicture" src="../../../assets/images/food-img.jpg" alt="">
+            <img *ngIf="restaurantPicture" src="{{logoAssestDir}}/{{restaurantPicture}}" alt="">
+            <h3>{{restaurantName}} </h3>
+            <h4>Delivering to: {{deliveryCity}} Delivering cost: {{deliveryCost | currency:'GHS'}}</h4>
+        </div>
+        <div class="all-menu">
+            <div *ngFor="let menu of menus,let i=index">
+                <mat-card class="each-menu cursor-pointer info-tab" (click)="onMenuClick(i)">
+                    <div class="menu-image info-left">
+                        <img *ngIf="menu.picture" src="{{logoAssestDir}}/{{menu.picture}}" alt="">
+                        <mat-icon *ngIf="!menu.picture">fastfood</mat-icon>
+                    </div>
+                    <div class="menu-content info-right">
+                        <h3>{{menu.name}}</h3>
+                        <h4>Starting from: {{menu.price | currency:'GHS'}}</h4>
+                    </div>
+                </mat-card>
+
+            </div>
+            <div class="no-menu" *ngIf="menus.length==0">
+                <h3>Sorry, this restaurant currently has no menu. Check back later, we dey beg..</h3>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <mat-card class="side-pane" [ngClass]="{'show-side-pane': showSidePane}">
+        <!-- <mat-card-header> -->
+        <h3>Cart</h3>
+        <!-- </mat-card-header> -->
+        <div class="checkout-orders">
+            <div *ngFor="let order of orderCart.orders,let i=index">
+                <p>{{order.name}}</p>
+                <p *ngIf="order.selectedOption!=''">With {{order.selectedOption}}</p>
+                <p>{{order.price | currency:'GHS'}}</p>
+                <span class="material-icons cursor-pointer" (click)="changeCartOrderQty('decrease',i)">
+                    remove_circle_outline 
+                </span>
+                <span>{{order.quantity}}</span>
+                <span class="material-icons cursor-pointer" (click)="changeCartOrderQty('increase',i)">
+                    add_circle_outline
+                </span>
+                <!-- <button type="button" (click)="changeCartOrderQty('decrease',i)">decrease</button> {{order.quantity}}
+                            <button type="button" (click)="changeCartOrderQty('increase',i)">increase</button> -->
+            </div>
+        </div>
+        <!-- <mat-divider></mat-divider> -->
+        <!-- <br> -->
+
+
+
+        <div class="fixed-options">
+            <div class="order-options">
+                <mat-chip-list aria-label="order option selection">
+                    <mat-chip color="primary" *ngIf="hasDelivery" [selected]="orderCart.mode=='delivery'" (click)="orderCart.mode='delivery';calculateCartCost()">Delivery
+                        <!-- <span *ngIf="orderCart.mode!='delivery'">, instead</span> -->
+                    </mat-chip>
+                    <mat-chip color="primary" *ngIf="hasPickup" [selected]="orderCart.mode=='pickup'" (click)="orderCart.mode='pickup';calculateCartCost()">Pickup
+                        <!-- <span *ngIf="orderCart.mode!='pickup'">, instead</span> -->
+                    </mat-chip>
+                    <mat-chip color="primary" *ngIf="hasReservation" [selected]="orderCart.mode=='table'" (click)="orderCart.mode='table';calculateCartCost()">Seat reservation
+                        <!-- <span *ngIf="orderCart.mode!='table'">, instead</span> -->
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+
+            <div class="pickup-time" *ngIf="orderCart.mode=='pickup'">
+                <p>Pickup time</p>
+                <input type="time" name="pickuptime" [(ngModel)]="orderCart.pickup">
+            </div>
+
+            <div class="order-table" *ngIf="orderCart.mode=='table'">
+                <p>Reserve a table</p>
+                <input type="time" placeholder="reservation time" name="rtabletime" [(ngModel)]="orderCart.table.time">
+                <!-- <mat-form-field>
+                        <mat-label>number of tables</mat-label>
+                        <input matInput type="number" min="1" max="tableOption.totalTables" name="rtablenumber" [(ngModel)]="orderCart.table.tables">
+                    </mat-form-field> --><br>
+                <span>number of tables</span>
+                <span class="material-icons cursor-pointer" (click)="changeTableNo('decrease')">
+                        remove_circle_outline 
+                    </span><span>{{orderCart.table.tables}}</span>
+                <span class="material-icons cursor-pointer" (click)="changeTableNo('increase')">
+                        add_circle_outline
+                    </span>
+                <br>
+                <span>number of chairs</span>
+                <span class="material-icons cursor-pointer" (click)="changeChairNo('decrease')">
+                        remove_circle_outline 
+                    </span><span>{{orderCart.table.chairs}}</span>
+                <span class="material-icons cursor-pointer" (click)="changeChairNo('increase')">
+                        add_circle_outline
+                    </span>
+
+                <!-- <mat-form-field>
+                        <mat-label>number of chairs</mat-label>
+                        <input matInput type="number" name="rchairnumber" [(ngModel)]="orderCart.table.chairs">
+                    </mat-form-field> -->
+                <!-- <input type="number" placeholder="number of tables" name="rtablenumber" [(ngModel)]="orderCart.table.tables">
+                    <input type="number" placeholder="number of chairs" name="rchairnumber" [(ngModel)]="orderCart.table.chairs"> -->
+
+            </div>
+            <div class="delivery-location" *ngIf="orderCart.mode=='delivery'">
+                <mat-form-field class="form-width" appearance=standard>
+                    <mat-label>address</mat-label>
+                    <input matInput type="text" name="daddress" required [(ngModel)]="orderCart.deliveryLocation.address" #daddress="ngModel">
+                    <mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-width f-right" appearance=standard>
+                    <mat-label>contact</mat-label>
+                    <input matInput type="text" name="dcontact" required [(ngModel)]="orderCart.deliveryLocation.number" #dcontact="ngModel">
+                    <mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <!-- <input type="text" placeholder="delivery address" name="daddress" [(ngModel)]="orderCart.deliveryLocation.address">
+                <input type="text" placeholder="phone number" name="dcontact" [(ngModel)]="orderCart.deliveryLocation.number"> -->
+            </div>
+            <div class="checkout-costs">
+                <p>Subtotal: {{orderCart.subtotal | currency:'GHS'}}</p>
+                <p *ngIf="orderCart.mode=='delivery'">Delivery Fee: {{orderCart.deliveryFee | currency:'GHS'}} </p>
+                <p *ngIf="orderCart.mode=='table'">Reservation Cost: {{orderCart.table.cost | currency:'GHS'}}</p>
+                <p>Total: {{orderCart.total | currency:'GHS'}}</p>
+            </div>
+            <button mat-raised-button color="primary" [disabled]="orderCart.orders.length==0" type="button" (click)="checkoutOrder()">
+                        Checkout
+                    </button>
+        </div>
+    </mat-card>
+</div>
+
+<button mat-fab color="primary" class="fab-cart" [matBadgeHidden]="orderCart.orders.length==0" [matBadge]="orderCart.orders.length" matBadgePosition="before" matBadgeColor="warn" (click)="showSidePane=!showSidePane">
+    <mat-icon>shopping_cart</mat-icon>
+</button>

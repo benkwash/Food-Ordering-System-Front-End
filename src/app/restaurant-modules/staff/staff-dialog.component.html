@@ -1,0 +1,255 @@
+<div *ngIf="dialogType=='staffDetail'">
+    <div mat-dialog-title class="head-top">
+        <h1>staff details</h1>
+        <span class="example-spacer"></span>
+        <span class="material-icons md-light" *ngIf="selectedStaff.userID && !selectedStaff.isDeactivated" (click)=resetStaffPassword(selectedStaff.userID) matTooltip="reset password" aria-label="Button that displays a tooltip when focused or hovered over">
+            update
+        </span>
+        <span class="material-icons md-light" *ngIf="!selectedStaff.userID" (click)=openStaffAccountCreation() matTooltip="create account" aria-label="Button that displays a tooltip when focused or hovered over">
+            person_add
+        </span>
+        <span class="material-icons md-light" *ngIf="selectedStaff.isDeactivated" (click)=enableStaffAccount(selectedStaff.userID) matTooltip="enable account" aria-label="Button that displays a tooltip when focused or hovered over">
+            person
+        </span>
+        <span class="material-icons md-red" *ngIf="selectedStaff.userID && !selectedStaff.isDeactivated" (click)=disableStaffAccount(selectedStaff.userID) matTooltip="disable account" aria-label="Button that displays a tooltip when focused or hovered over">
+            person_add_disabled
+        </span>
+        <span class="material-icons md-red" (click)='deleteStaffInfo(selectedStaff._id)' matTooltip="delete" aria-label="Button that displays a tooltip when focused or hovered over">
+            delete
+        </span>
+        <span class="material-icons md-light" (click)='editStaff=!editStaff' matTooltip="modify" aria-label="Button that displays a tooltip when focused or hovered over">
+            create
+        </span>
+
+        <span class="material-icons md-light" (click)="onNoClick()" matTooltip="close">
+            close
+        </span>
+
+    </div>
+    <div mat-dialog-content class="mat-content">
+        <div class="selected-menu-info" *ngIf="!editStaff">
+
+
+            <mat-divider></mat-divider>
+
+            <div class="staff-picture">
+                <span class="material-icons mi-picture cursor-pointer" *ngIf="!selectedStaff.picture && !uploading" (click)=fileInput.click() matTooltip="add photo">
+                    person
+                </span>
+                <input type="file" matTooltip="update photo" name="resphoto" accept="{{acceptedImageTypes}}" (change)="onPhotoAdded($event)" #fileInput hidden>
+                <img (click)=fileInput.click() matTooltip="update photo" class="cursor-pointer" *ngIf="selectedStaff.picture" src="{{logoAssestDir}}/{{selectedStaff.picture}}" alt="staff photo">
+                <mat-progress-bar *ngIf=uploading color="accent" mode="indeterminate"></mat-progress-bar>
+            </div>
+
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Name</h4>
+                </div>
+                <div class="info-right">
+                    <p>{{selectedStaff.fName}} {{selectedStaff.lName}}</p>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Title</h4>
+                </div>
+                <div class="info-right">
+                    <p>{{selectedStaff.title}}</p>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Sex</h4>
+                </div>
+                <div class="info-right">
+                    <p>{{selectedStaff.sex}}</p>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Staff ID</h4>
+                </div>
+                <div class="info-right">
+                    <p>{{selectedStaff.employeeID}}</p>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>Address</h4>
+                </div>
+                <div class="info-right">
+                    <address>{{selectedStaff.address}}</address>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    <h4>email</h4>
+                </div>
+                <div class="info-right">
+                    <p *ngIf="selectedStaff.email">{{selectedStaff.email}}</p>
+                    <p *ngIf="!selectedStaff.email">N/A</p>
+                </div>
+            </div>
+            <div class="info-tab">
+                <div class="info-left">
+                    qualification
+                </div>
+                <div class="info-right">
+                    <p>{{selectedStaff.qualification}}</p>
+                </div>
+            </div>
+
+            <div *ngIf="selectedStaff.userID && !selectedStaff.isDeactivated">
+                <div class="info-tab">
+                    <div class="info-left">
+                        account permissions
+                    </div>
+                    <div class="info-right">
+                        <p *ngIf="selectedStaff.permissions.staff">manage staff</p>
+                        <p *ngIf="selectedStaff.permissions.menu">manage menu</p>
+                        <p *ngIf="selectedStaff.permissions.orders">manage orders</p>
+                        <p *ngIf="selectedStaff.permissions.delivery">make deliveries</p>
+                        <p *ngIf="selectedStaff.permissions.accounts">manage finances/bills</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="update-staff" *ngIf="editStaff">
+            <h3>Update staff information</h3>
+            <form #updateStaff=ngForm (submit)=updateStaffInfo()>
+
+                <mat-form-field class="form-width" appearance="standard">
+                    <mat-label>first name</mat-label>
+                    <input matInput name="efname" [(ngModel)]="selectedStaff.fName" #name='ngModel'>
+                </mat-form-field>
+                <mat-form-field class="form-width" appearance="standard">
+                    <mat-label>last name</mat-label>
+                    <input matInput name="elname" [(ngModel)]="selectedStaff.lName" #name='ngModel'>
+                </mat-form-field>
+
+
+                <label id="sex-radio-group-label">Sex</label><br>
+                <mat-radio-group class="radio-group" aria-labelledby="sex-radio-group-label" name="sex" [(ngModel)]="selectedStaff.sex">
+                    <mat-radio-button class="radio-button" value="m">male</mat-radio-button>
+                    <mat-radio-button class="radio-button" value="f">female</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field class="form-width" appearance="standard">
+                    <mat-label>position</mat-label>
+                    <input matInput name="eposition" [(ngModel)]="selectedStaff.title" #name='ngModel'>
+                </mat-form-field>
+                <mat-form-field class="form-width" appearance="standard">
+                    <mat-label>staff ID</mat-label>
+                    <input matInput name="estaffid" [(ngModel)]="selectedStaff.employeeID" #name='ngModel'>
+                </mat-form-field>
+
+                <mat-form-field class="form-width" appearance="standard">
+                    <mat-label>address</mat-label>
+                    <input matInput name="eaddress" [(ngModel)]="selectedStaff.address" #name='ngModel'>
+                </mat-form-field>
+
+                <mat-form-field class="form-width" appearance="standard">
+                    <mat-label>email</mat-label>
+                    <input matInput name="eaddress" [(ngModel)]="selectedStaff.address" #name='ngModel'>
+                </mat-form-field>
+
+                <mat-form-field class="form-width" appearance="standard">
+                    <mat-label>qualification</mat-label>
+                    <input matInput name="equaification" [(ngModel)]="selectedStaff.qualification" #name='ngModel'>
+                </mat-form-field>
+
+
+                <div *ngIf="selectedStaff.userID && !selectedStaff.isDeactivated">
+                    <h3>Account permissions</h3>
+                    <mat-slide-toggle color="primary" [checked]="selectedStaff.permissions.staff" [(ngModel)]="selectedStaff.permissions.staff" value="true" name="estaff" #name="ngModel" matTooltip="add,update and delete other staff">
+                        manage other staff
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="selectedStaff.permissions.menu" [(ngModel)]="selectedStaff.permissions.menu" value="true" name="emenu" #name="ngModel" matTooltip="add,update and delete restaurant menu">
+                        manage restaurant menu
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="selectedStaff.permissions.accounts" [(ngModel)]="selectedStaff.permissions.accounts" value="true" name="eaccounts" #name="ngModel">
+                        manage finaces
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="selectedStaff.permissions.orders" [(ngModel)]="selectedStaff.permissions.orders" value="true" name="eorders" #name="ngModel" matTooltip="process orders and assign to deliery persons">
+                        manage orders
+                    </mat-slide-toggle><br>
+                    <mat-slide-toggle color="primary" [checked]="selectedStaff.permissions.delivery" [(ngModel)]="selectedStaff.permissions.delivery" value="true" name="edelivery" #name="ngModel" matTooltip="take up and delivery orders">
+                        do deliveries
+                    </mat-slide-toggle>
+                </div>
+
+
+
+            </form>
+
+        </div>
+    </div>
+    <div mat-dialog-actions *ngIf="editStaff" class="action-btns">
+        <span class="example-spacer"></span>
+        <button mat-button color="warn" (click)="editStaff=!editStaff">Cancel</button>
+        <button mat-button color="primary" (click)="updateStaffInfo()" cdkFocusInitial>Save</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType=='newStaff'">
+    <h1 mat-dialog-title>staff details</h1>
+    <div mat-dialog-content class="mat-content">
+        <form #addStaff=ngForm (submit)=addNewStaff()>
+            <div class="staff-picture">
+                <span class="material-icons mi-picture cursor-pointer" *ngIf="!newStaffForm.picture && !uploading" (click)=fileInput.click()>
+                    person_add_alt_1
+                </span>
+                <input type="file" matTooltip="update photo" name="resphoto" accept="{{acceptedImageTypes}}" (change)="onPhotoAdded($event)" #fileInput hidden>
+                <img (click)=fileInput.click() class="cursor-pointer" *ngIf="newStaffForm.picture" src="{{logoAssestDir}}/{{newStaffForm.picture}}" alt="staff photo">
+                <mat-progress-bar *ngIf=uploading color="accent" mode="indeterminate"></mat-progress-bar>
+            </div>
+
+            <mat-form-field appearance="standard">
+                <mat-label>first name</mat-label>
+                <input matInput name="fname" [(ngModel)]="newStaffForm.fName" #name="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label>last name</mat-label>
+                <input matInput name="lname" [(ngModel)]="newStaffForm.lName" #name="ngModel">
+            </mat-form-field>
+            <br>
+            <label id="sex-radio-group-label">Sex</label><br>
+            <mat-radio-group class="radio-group" aria-labelledby="sex-radio-group-label" name="sex" [(ngModel)]="newStaffForm.sex">
+                <mat-radio-button class="radio-button" value="m">male</mat-radio-button>
+                <mat-radio-button class="radio-button" value="f">female</mat-radio-button>
+            </mat-radio-group>
+            <br>
+            <mat-form-field class="form-width" appearance="standard">
+                <mat-label>staff position</mat-label>
+                <input matInput name="title" [(ngModel)]="newStaffForm.title" #name="ngModel">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="form-width" appearance="standard">
+                <mat-label>staff id</mat-label>
+                <input matInput name="empployeeid" [(ngModel)]="newStaffForm.employeeID" #name="ngModel">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="form-width" appearance="standard">
+                <mat-label>address</mat-label>
+                <input matInput name="address" [(ngModel)]="newStaffForm.address" #name="ngModel">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="form-width" appearance="standard">
+                <mat-label>email</mat-label>
+                <input matInput type="email" name="email" email [(ngModel)]="newStaffForm.email" #name="ngModel">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="form-width" appearance="standard">
+                <mat-label>qualification</mat-label>
+                <input matInput name="qualification" [(ngModel)]="newStaffForm.qualification" #name="ngModel">
+            </mat-form-field>
+
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="action-btns">
+        <span class="example-spacer"></span>
+        <button mat-button color="warn" (click)="onNoClick()">Cancel</button>
+        <button mat-button color="primary" (click)="addNewStaff()">Add staff</button>
+    </div>
+</div>

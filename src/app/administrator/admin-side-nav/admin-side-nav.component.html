@@ -1,0 +1,41 @@
+<mat-nav-list>
+    <div class="profile-card">
+        <div class="header">
+            <h2>{{resName}}</h2>
+            <!-- <h4>Reestaurant description</h4> -->
+        </div>
+
+        <span *ngIf="!resPicture" class="material-icons res-picture">
+            storefront
+        </span>
+        <img *ngIf="resPicture" src="{{logoAssestDir}}/{{resPicture}}" alt="">
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h3 MatSubheader class="subheader">Manage</h3>
+
+    <a mat-list-item routerLink="/restaurant/admin/home" (click)=sidebarToggle()>
+        <mat-icon>dashboard</mat-icon> Dashboard
+    </a>
+    <a mat-list-item routerLink="/restaurant/admin/manage/menu" (click)=sidebarToggle()>
+        <mat-icon>restaurant</mat-icon> Menu
+    </a>
+    <a mat-list-item routerLink="/restaurant/admin/manage/staff" (click)=sidebarToggle()>
+        <mat-icon>person_outline</mat-icon>
+        Staff
+    </a>
+    <a mat-list-item routerLink="/restaurant/admin/manage/orders" (click)=sidebarToggle()>
+        <mat-icon>list_alt</mat-icon>Orders
+    </a>
+    <a mat-list-item routerLink="/restaurant/admin/manage/delivery" (click)=sidebarToggle()>
+        <mat-icon>local_shipping</mat-icon>Deliveries
+    </a>
+    <a mat-list-item routerLink="/restaurant/admin/manage/rating" (click)=sidebarToggle()>
+        <mat-icon>star_half</mat-icon>Rating and reviews
+    </a>
+    <a mat-list-item routerLink="/restaurant/admin/manage/accounts" (click)=sidebarToggle()>
+        <mat-icon>account_balance_wallet</mat-icon>Accounts and revenue
+    </a>
+
+</mat-nav-list>

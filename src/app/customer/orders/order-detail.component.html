@@ -1,0 +1,223 @@
+<div mat-dialog-title class="head-top">
+    <h4>
+        Order status: {{orderDetail.status}}
+    </h4>
+    <span class="example-spacer"></span>
+
+    <button class="right-btns" (click)=cancelOrder(orderDetail) *ngIf="orderDetail.action=='cancel'" mat-button color="warn">
+        cancel order
+    </button>
+    <button class="right-btns" (click)=confirmOrder(orderDetail) *ngIf="orderDetail.action=='confirm'" mat-button color="primary">
+        confirm order
+    </button>
+    <span class="material-icons" (click)=onNoClick() matTooltip="close">
+        close
+    </span>
+
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content>
+    <div class="selected-menu">
+
+        <div class="selected-menu-info">
+
+            <div class="order-detail" *ngIf="orderDetail!=null">
+                <div *ngFor="let order of orderDetail.orders">
+                    <div class="orders pd-10 mg-10">
+                        <h3>{{order.name}}</h3>
+                        <div *ngFor="let ingredient of order.ingredients">
+                            <div class="info-tab">
+                                <div class="info-left">
+                                    <h4>{{ingredient.name}}</h4>
+                                </div>
+                                <div class="info-right">
+                                    <p>{{ingredient.quantity}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-tab" *ngIf="order.selectedOption">
+                            <div class="info-left">
+                                <h4>Selected Option</h4>
+                            </div>
+                            <div class="info-right">
+                                <p>{{order.selectedOption}}</p>
+                            </div>
+                        </div>
+                        <div class="info-tab">
+                            <div class="info-left">
+                                <h4>Order quantity</h4>
+                            </div>
+                            <div class="info-right order-qty">
+                                <p> {{order.quantity}}</p>
+                            </div>
+                        </div>
+                        <div class="info-tab">
+                            <div class="info-left">
+                                <h4>Order cost</h4>
+                            </div>
+                            <div class="info-right order-price">
+                                <p>{{order.price | currency:'GHS'}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="cart-details pd-10">
+                    <div class="info-tab">
+                        <div class="info-left">
+                            <h4>Order mode</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.mode}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='pickup'">
+                        <div class="info-left">
+                            <h4>Pickup time</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.pickup | date:'shortTime'}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='delivery'">
+                        <div class="info-left">
+                            <h4>Delivery location</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.deliveryLocation.address}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='table'">
+                        <div class="info-left">
+                            <h4>Reservation time</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.table.time | date:'shortTime'}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='table'">
+                        <div class="info-left">
+                            <h4>Reserved tables</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.table.tables}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab" *ngIf="orderDetail.mode=='table'">
+                        <div class="info-left">
+                            <h4>Reserved chairs</h4>
+                        </div>
+                        <div class="info-right">
+                            <p>{{orderDetail.table.chairs}}</p>
+                        </div>
+                    </div>
+                    <div class="info-tab">
+                        <div class="info-left">
+                            <h4>subtotal</h4>
+                        </div>
+                        <div class="info-right order-price">
+                            <h3>{{orderDetail.subtotal | currency:'GHS'}}</h3>
+                        </div>
+                    </div>
+                    <div class="info-tab">
+                        <div class="info-left">
+                            <h4>total</h4>
+                        </div>
+                        <div class="info-right order-price">
+                            <h3>{{orderDetail.total | currency:'GHS'}}</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+
+    <div class="reviews-card" *ngIf='orderReview.rating'>
+        <div class="review-title">
+            <h3>Your rating</h3>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="reviews">
+            <div class="all-reviews">
+                <div class="a-review">
+                    <div class="review-head">
+                        <h4>
+                            <span class="material-icons">face</span>Me
+                        </h4>
+                        <!-- <span class="example-spacer"></span> -->
+                    </div>
+                    <div class="review-rating">
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':orderReview.rating>=1}"> 
+                                star
+                            </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':orderReview.rating>=2}"> 
+                                star
+                            </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':orderReview.rating>=3}"> 
+                                star
+                            </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':orderReview.rating>=4}"> 
+                                star
+                            </span>
+                        <span class="material-icons rating-star" [ngClass]="{'star-colored':orderReview.rating==5}"> 
+                                star
+                            </span>
+                    </div>
+                    <div class="review-date">
+                        <p>{{orderReview.date | date:"short" }}</p>
+                    </div>
+                    <div class="review-comment">
+                        <p>
+                            {{orderReview.comment}}
+                        </p>
+                    </div>
+
+                    <mat-expansion-panel *ngIf="orderReview.replies.length!=0">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                replies
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <!-- nothing here -->
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="review-replies" *ngFor="let reply of orderReview.replies">
+                            <div class="a-reply">
+
+                                <div class="reply-head">
+                                    <h4 *ngIf="orderDetail.customerID==reply.by">
+                                        <span class="material-icons">face</span> Me&nbsp;&nbsp;&nbsp; {{reply.date | date:"short" }}
+                                    </h4>
+                                    <h4 *ngIf="orderDetail.customerID!=reply.by">
+                                        <span class="material-icons">storefront</span>Restaurant&nbsp;&nbsp;&nbsp; {{reply.date | date:"short" }}
+                                    </h4>
+                                </div>
+                                <div class="reply-comment">
+                                    <p>
+                                        {{reply.reply}}
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                    <div class="reply-action" *ngIf='orderReview.comment'>
+                        <mat-form-field appearance="standard">
+                            <mat-label>reply</mat-label>
+                            <input (keydown.enter)="sendReply()" matInput type="text" name="reviewreply" [(ngModel)]=reviewReply>
+                            <mat-icon (click)="sendReply()" matSuffix matTooltip="send reply" matTooltipPosition='below' class="cusor-pointer">
+                                send
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div mat-dialog-actions>
+
+</div> -->

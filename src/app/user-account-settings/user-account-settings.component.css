@@ -1,0 +1,47 @@
+.main-card {
+    position: relative;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.sub-card {
+    margin: 10px;
+}
+
+.form-width {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+}
+
+.big-section {
+    margin-bottom: 20px;
+}
+
+.big-section h3 {
+    margin-bottom: 15px;
+}
+
+.form-panel input.form-control {
+    height: 40px;
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}

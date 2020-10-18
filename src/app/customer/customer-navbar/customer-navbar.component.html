@@ -1,0 +1,45 @@
+<mat-toolbar color="primary" class="nav-bar">
+    <h4 [routerLink]="['/']" class="product-name curser-pointer">
+        {{productName}}
+        <img class="res-logo" src="../../../assets/images/ben-comecho-logo.png" alt="">
+    </h4>
+    <span class="example-spacer"></span>
+
+
+    <button mat-button *ngIf="customerName==''" class="right-tools" [routerLink]="['/signupcustomer']">
+        <mat-icon>how_to_reg</mat-icon>
+        signup
+    </button>
+    <button mat-button *ngIf="customerName==''" class="right-tools" [routerLink]="['/signIn']">
+        <mat-icon>login</mat-icon>
+        signin
+    </button>
+
+
+    <button mat-button [routerLink]="['/customer/myorders']" *ngIf="customerName!=''" class="right-tools curser-pointer">
+        <mat-icon>fastfood</mat-icon>
+        <span class="hide-menu-text">
+            My orders
+        </span>
+    </button>
+    <button mat-button *ngIf="customerName!=''" class="right-tools curser-pointer" [matMenuTriggerFor]="beforeMenu">
+        <span class="hide-menu-text">
+            Hey {{customerName}}
+        </span>
+        <span class="material-icons" > account_circle </span>
+    </button>
+
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item [routerLink]="['/customer/account']">
+            <mat-icon>person</mat-icon>
+            my account
+        </button>
+        <button mat-menu-item [routerLink]="['/logout']">
+            <mat-icon>login</mat-icon>
+            logout
+        </button>
+    </mat-menu>
+</mat-toolbar>
+
+
+<!-- end of nav section -->

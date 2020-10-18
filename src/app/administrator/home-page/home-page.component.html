@@ -1,0 +1,76 @@
+<div class="home-main-page">
+    <div class="rating" *ngIf="resRating.rating!=0">
+        <mat-card>
+            <div class="rating-head">
+                <h3>Customer rating</h3>
+                <span class="example-spacer"></span>
+                <h4 class="cursor-pointer rating-see-all" routerLink="/restaurant/admin/manage/rating">
+                    see reviews
+                    <span class="material-icons">arrow_right_alt</span>
+                </h4>
+            </div>
+            <div class="rating-body info-tab">
+                <div class="rating-number info-left">
+                    <h3>{{resRating.rating| number:'1.0-1'}}</h3>
+                    <div class="star-rating">
+                        <span class="material-icons star star-one" [ngClass]="{'star-colored':true}"> 
+                            star
+                        </span>
+                        <span class="material-icons star star-one" [ngClass]="{'star-colored':true}"> 
+                            star
+                        </span>
+                        <span class="material-icons star star-one" [ngClass]="{'star-colored':true}"> 
+                            star
+                        </span>
+                        <span class="material-icons star star-one" [ngClass]="{'star-colored':true}"> 
+                            star
+                        </span>
+                        <span class="material-icons star star-one" [ngClass]="{'star-colored':true}"> 
+                            star
+                        </span>
+                    </div>
+                    <div class="user-number">
+                        <h4><span class="material-icons star"> 
+                            person
+                        </span>{{resRating.outOf}}</h4>
+                    </div>
+                </div>
+                <div class="rating-breakdown info-right">
+                    <div class="rating-no">
+                        <p>5</p>
+                        <mat-progress-bar mode="determinate" [value]=resRating.breakdown.five></mat-progress-bar>
+                    </div>
+                    <div class="rating-no">
+                        <p>4</p>
+                        <mat-progress-bar mode="determinate" [value]=resRating.breakdown.four></mat-progress-bar>
+                    </div>
+                    <div class="rating-no">
+                        <p>3</p>
+                        <mat-progress-bar mode="determinate" [value]=resRating.breakdown.three></mat-progress-bar>
+                    </div>
+                    <div class="rating-no">
+                        <p>2</p>
+                        <mat-progress-bar mode="determinate" [value]=resRating.breakdown.two></mat-progress-bar>
+                    </div>
+                    <div class="rating-no">
+                        <p>1</p>
+                        <mat-progress-bar mode="determinate" [value]=resRating.breakdown.one></mat-progress-bar>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </mat-card>
+    </div>
+    <div class="line-chart" *ngIf="chartOptions">
+        <mat-card>
+            <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"></highcharts-chart>
+        </mat-card>
+    </div>
+    <div class="pie-chart" *ngIf="pieChart">
+        <mat-card>
+            <highcharts-chart [Highcharts]="Highcharts" [options]="pieChart"></highcharts-chart>
+        </mat-card>
+    </div>
+</div>
